@@ -15,19 +15,19 @@ CREATE TABLE `project_db`.`users` (
   CREATE TABLE `project_db`.`groups` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `group_name` VARCHAR(45) NOT NULL,
-  `admin_user_id` VARCHAR(45) NOT NULL,
+  `admin_user_id` INT NOT NULL,
   `dollar_amount` INT NOT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`));
 
   CREATE TABLE `project_db`.`users_groups` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `group_id` INT NOT NULL,
-  `assigned_user_id` INT NOT NULL,
-  `role` VARCHAR(45) NOT NULL,
-  `sent` TINYINT NULL DEFAULT 0,
-  `received` TINYINT NULL DEFAULT 0,
+  `users_id` INT NOT NULL,
+  `groups_id` INT NOT NULL,
+  `assigned_user_id` INT NOT NULL DEFAULT 0,
+  `role` VARCHAR(45) NOT NULL DEFAULT "user",
+  `sent` TINYINT NOT NULL DEFAULT 0,
+  `received` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES users(`id`),
-  FOREIGN KEY (`group_id`) REFERENCES groups(`id`));
+  FOREIGN KEY (`users_id`) REFERENCES users(`id`),
+  FOREIGN KEY (`groups_id`) REFERENCES groups(`id`));
