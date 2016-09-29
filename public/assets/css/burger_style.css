@@ -1,0 +1,20 @@
+ body { 
+    background: url("../img/bg2.jpg") no-repeat fixed center; 
+}
+ h1 {
+ 	text-align:center;
+ }
+
+ p {
+ 	width:500px;
+ 	margin-left:30%;
+ 	font-size:15px;
+ }
+h1, h2, li {
+	font-weight: bold;
+}
+ .row {
+    background-color: rgba(255, 115, 0, 0.66);
+    margin-top: 15px;
+    padding-bottom: 20px;
+ }

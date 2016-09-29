@@ -1,34 +1,33 @@
-// DEPENDENCIES
 var express = require('express');
-var mysql = require('mysql');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override')
+var exphbs = require('express-handlebars');
 
 var routes = require('./GiftBuddy/controllers/giftbuddy_controllers.js');
 
-// CONNECTION
-var connection = require('./GiftBuddy/config/connection.js');
-
-// MIDDLEWARE
 var app = express();
-app.use(bodyParser.urlencoded({extended: true}));
+var PORT = process.env.PORT || 3002;
+
+//Serve static content for the app from the "public" directory in the application directory.
+app.use('/static', express.static(__dirname + '/public'));
+
+
+// app.use(express.static(process.cwd() + '/public'));
+
+app.use(bodyParser.urlencoded({
+	extended: false
+}))
+
+// override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 
-// HANDLEBARS
-// var exphbs = require('express-handlebars');
-// app.engine('handlebars', exphbs({
-//     defaultLayout: 'main',
-//     extname: '.handlebars',
-//     layoutsDir: 'burger/views/layouts'}));
-// app.set('view engine','handlebars');
-// app.set('views', __dirname + '/burger/views');
 
-// ROUTES
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
 
+app.use('/', routes);
 
-
-
-// CONFIRMATION
-var PORT = process.env.PORT || 3000;
-app.listen(PORT, function(){
-    console.log('App listening on PORT: ' + PORT);
-});
+app.listen(PORT);

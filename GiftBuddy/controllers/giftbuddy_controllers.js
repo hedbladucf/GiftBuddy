@@ -1,30 +1,40 @@
-// Requires: Express, router, and burger.js
-var express = require('express');
+var express = require("express");
+var mo = require("method-override");
+var bp = require("body-parser");
+
+var GB = require("../models/giftbuddy.js");
 var router = express.Router();
-var db = require('../models/giftbuddy.js');
 
-// router
-router.route('/')
-    .get(function(req,res){
-        
+router.get('/', function(req,res) {
+	res.render('index')
 });
+ 
+// //Read
+// router.get('/burgers', function(req,res) {
+// 	GB.selectAll('events', function(data){
+// 		var hbsObject = {burgers : data}
+// 		// console.log(hbsObject)
+// 		res.render('index', hbsObject);
+// 	});
+// });
 
-// route
-router.route('/')
-    .get(function(req,res){
-       
-    })
-    .post(function(req,res){
-        
-});
+// //Create
+// router.post('/burgers/create', function(req,res) {
+// 	console.log(req.body.burger_name);
+// 	burger.insertOne('events', req.body.burger_name, req.body.devoured, function(data){
+// 		res.redirect('/burgers')
+// 	});
+// });
 
-// route
-router.route('/giftSomething')
-    .put(function(req,res) {
-        
-    });
-    .get(function(req,res){
-    
-});
+// //Update
+// router.put('/burgers/update/:id', function(req,res) {
+// 	var condition = 'id = ' + req.params.id;
+
+// 	console.log('condition', condition);
+
+// 	burger.updateOne('events', {'devoured' : req.body.devoured}, condition, function(data){
+// 		res.redirect('/burgers');
+// 	});
+// });
 
 module.exports = router;
