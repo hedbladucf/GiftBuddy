@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var exphbs = require('express-handlebars');
 
-var routes = require('./GiftBuddy/controllers/giftbuddy_controllers.js');
+var routes = require('./controllers/giftbuddy_controllers.js');
 
 var app = express();
 var PORT = process.env.PORT || 3002;
