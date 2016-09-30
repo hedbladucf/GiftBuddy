@@ -8,6 +8,12 @@ var giftObject = {
             cb(result);
         });
     },
+
+    createGroup: function(tableInput, group_name, admin_user_id, dollar_amount, cb){
+    	orm.createGroup(tableInput, group_name, admin_user_id, dollar_amount, function(result){
+    		cb(result);
+    	})
+    }
     
 };
 

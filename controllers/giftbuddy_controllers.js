@@ -8,7 +8,31 @@ var router = express.Router();
 router.get('/', function(req,res) {
 	res.render('index')
 });
- 
+
+//Route for user authentication
+router.post('/auth', function(req,res) {
+	console.log(req.body);
+
+});
+
+//Route for user sign up
+router.post('/signup', function(req,res) {
+	console.log(req.body);
+
+	GB.createUser('users', req.body.full_name, req.body.address, req.bod.email, req.body.password, function(data){
+		res.redirect('/')
+	});
+});
+
+//Route for creating a group
+router.post('/groupup', function(req, res){
+	console.log(req.body);
+
+	GB.createGroup('groups', req.body.group_name, req.body.admin_user_id, req.body.dollar_amount, function(data){
+		res.redirect('/')
+	})
+})
+
 // //Read
 // router.get('/burgers', function(req,res) {
 // 	GB.selectAll('events', function(data){
@@ -18,13 +42,6 @@ router.get('/', function(req,res) {
 // 	});
 // });
 
-// //Create
-// router.post('/burgers/create', function(req,res) {
-// 	console.log(req.body.burger_name);
-// 	burger.insertOne('events', req.body.burger_name, req.body.devoured, function(data){
-// 		res.redirect('/burgers')
-// 	});
-// });
 
 // //Update
 // router.put('/burgers/update/:id', function(req,res) {

@@ -13,7 +13,21 @@ var orm = {
             if (err) throw err;
             cb(result);
         });
-    },	
+    },
+
+    createGroup: function(tableInput, group_name, admin_user_id, dollar_amount, cb){
+    	var queryString = 'INSERT INTO ' + tableInput + ' (group_name, admin_user_id, dollar_amount) ';
+        queryString += 'VALUES ("' + group_name + '", ' + admin_user_id + '", ' + dollar_amount + ');';
+
+      	console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+
+    
 };
 
 module.exports = orm;
