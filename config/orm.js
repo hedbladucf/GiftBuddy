@@ -21,13 +21,11 @@ var orm = {
 
       	console.log(queryString);
 
-        connection.query(queryString, function(err, result) {
+       	connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);
         });
     },
-
-    
 };
 
 module.exports = orm;
