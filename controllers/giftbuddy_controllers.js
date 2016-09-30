@@ -5,26 +5,37 @@ var bp = require("body-parser");
 var GB = require("../models/giftbuddy.js");
 var router = express.Router();
 
+//Root, where users log in or sign up
 router.get('/', function(req,res) {
 	res.render('index')
 });
 
+//Home, where users go after logging in
+router.get('/home', function(req, res){
+	res.render('home')
+})
+
+
+
+
 //Route for user authentication
 router.post('/auth', function(req,res) {
-	console.log(req.body.email);
 
 	GB.verifyUser('users', req.body.email, req.body.password, function(data){
 		console.log(data);
+		console.log(data[0]);
+
+		var data = data[0];
+		console.log(data);
+
+		if (data){
+			res.redirect('/home')
+		} else {
+			res.redirect('/')
+		};
 
 
-		// if (data == 0){
-
-		// }
-
-
-
-		res.redirect('/home.html')
-	})
+	});
 
 
 });
