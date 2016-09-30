@@ -16,7 +16,6 @@ CREATE TABLE `p2o40rwbj6zuxy26`.`users` (
   CREATE TABLE `p2o40rwbj6zuxy26`.`groups` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `group_name` VARCHAR(45) NOT NULL,
-  `admin_user_id` INT NOT NULL,
   `dollar_amount` INT NOT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`));

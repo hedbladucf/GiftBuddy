@@ -19,6 +19,12 @@ var giftObject = {
     	orm.verifyUser(tableInput, email, password, function(result){
     		cb(result);
     	})
+    },
+
+    update: function(tableInput, objColVals, condition, cb){
+        orm.update(tableInput, objColVals, condition, function(res){
+            cb(res);
+        });
     }
     
 };

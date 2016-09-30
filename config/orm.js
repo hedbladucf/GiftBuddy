@@ -1,6 +1,21 @@
 // Require connection
 var connection = require('../config/connection.js');
 
+//Turns the object containing the columns that need to be updated into an array that the orm can use
+function objToSql(ob){
+  //column1=value, column2=value2,...
+  var arr = [];
+
+  for (var key in ob) {
+    arr.push(key + '=' + ob[key]);
+  }
+
+  return arr.toString();
+}
+
+
+
+
 /* OBJECT RELATIONAL MODEL */
 var orm = {
     createUser: function(tableInput, full_name, address, email, password, cb) {
@@ -36,13 +51,29 @@ var orm = {
             if (err) throw err;
             cb(result);
         });
-
-
-
-
-
-
     },
+
+    update: function(tableInput, objColVals, condition, cb){
+        var queryString = 'UPDATE ' + tableInput;
+
+        queryString += 'SET ';
+        queryString += objToSql(objColVals);
+        queryString += ' WHERE ';
+        queryString += condition;
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+
+
+    }
+
+
+
+
 
 };
 

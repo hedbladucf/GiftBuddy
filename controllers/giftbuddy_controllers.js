@@ -68,15 +68,19 @@ router.post('/groupup', function(req, res){
 // });
 
 
-// //Update
-// router.put('/burgers/update/:id', function(req,res) {
-// 	var condition = 'id = ' + req.params.id;
+//Update
+router.put('/update', function(req,res) {
+	var condition = 'id = ' + req.body.id;
 
-// 	console.log('condition', condition);
+	var table = req.body.table;
+	var column = req.body.column;
+	var value = req.body.value;
 
-// 	burger.updateOne('events', {'devoured' : req.body.devoured}, condition, function(data){
-// 		res.redirect('/burgers');
-// 	});
-// });
+	console.log('condition', condition);
+
+	GB.update(table, {column: value}, condition, function(data){
+		res.redirect('/home');
+	});
+});
 
 module.exports = router;

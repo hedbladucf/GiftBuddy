@@ -15,7 +15,6 @@ CREATE TABLE `project_db`.`users` (
   CREATE TABLE `project_db`.`groups` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `group_name` VARCHAR(45) NOT NULL,
-  `admin_user_id` INT NOT NULL,
   `dollar_amount` INT NOT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`));

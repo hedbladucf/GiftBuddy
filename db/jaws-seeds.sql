@@ -14,8 +14,8 @@ USE p2o40rwbj6zuxy26;
   
 -- When a group is created. The creator is assigned as admin
   
-  INSERT INTO groups (group_name, admin_user_id, dollar_amount)
-  VALUES ("Original Gift Buddies", 1, 50);
+  INSERT INTO groups (group_name, dollar_amount)
+  VALUES ("Original Gift Buddies", 50);
 
   INSERT INTO users_groups (users_id, groups_id, role)
   VALUES (1, 1, "admin");
