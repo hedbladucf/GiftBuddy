@@ -13,6 +13,12 @@ var giftObject = {
     	orm.createGroup(tableInput, group_name, admin_user_id, dollar_amount, function(result){
     		cb(result);
     	})
+    },
+
+    verifyUser: function(tableInput, email, password, cb){
+    	orm.verifyUser(tableInput, email, password, function(result){
+    		cb(result);
+    	})
     }
     
 };

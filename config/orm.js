@@ -26,6 +26,24 @@ var orm = {
             cb(result);
         });
     },
+
+    verifyUser: function(tableInput, email, password, cb){
+    	var queryString = 'SELECT count(*) FROM ' + tableInput + ' WHERE email = (?) and password = (?)';
+
+      	console.log(queryString);
+
+       	connection.query(queryString, [email, password], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+
+
+
+
+
+
+    },
+
 };
 
 module.exports = orm;

@@ -11,7 +11,21 @@ router.get('/', function(req,res) {
 
 //Route for user authentication
 router.post('/auth', function(req,res) {
-	console.log(req.body);
+	console.log(req.body.email);
+
+	GB.verifyUser('users', req.body.email, req.body.password, function(data){
+		console.log(data);
+
+
+		// if (data == 0){
+
+		// }
+
+
+
+		res.redirect('/home.html')
+	})
+
 
 });
 
