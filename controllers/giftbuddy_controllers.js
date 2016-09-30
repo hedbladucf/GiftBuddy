@@ -53,7 +53,7 @@ router.post('/signup', function(req,res) {
 router.post('/groupup', function(req, res){
 	console.log(req.body);
 
-	GB.createGroup('groups', req.body.group_name, req.body.admin_user_id, req.body.dollar_amount, function(data){
+	GB.createGroup('groups', req.body.group_name, req.body.dollar_amount, function(data){
 		res.redirect('/')
 	})
 })
@@ -78,7 +78,7 @@ router.put('/update', function(req,res) {
 
 	console.log('condition', condition);
 
-	GB.update(table, {column: value}, condition, function(data){
+	GB.update(table, {column: value, column2: value2}, condition, function(data){
 		res.redirect('/home');
 	});
 });

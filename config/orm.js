@@ -30,9 +30,9 @@ var orm = {
         });
     },
 
-    createGroup: function(tableInput, group_name, admin_user_id, dollar_amount, cb){
+    createGroup: function(tableInput, group_name, dollar_amount, cb){
     	var queryString = 'INSERT INTO ' + tableInput + ' (group_name, admin_user_id, dollar_amount) ';
-        queryString += 'VALUES ("' + group_name + '", ' + admin_user_id + '", ' + dollar_amount + ');';
+        queryString += 'VALUES ("' + group_name + '", ' + dollar_amount + ');';
 
       	console.log(queryString);
 
