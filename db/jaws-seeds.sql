@@ -16,32 +16,43 @@ USE p2o40rwbj6zuxy26;
   
   INSERT INTO groups (group_name, dollar_amount)
   VALUES ("Original Gift Buddies", 10);
-
-  INSERT INTO groups (group_name, dollar_amount)
-  VALUES ("Second Group", 20);
-
-  INSERT INTO groups (group_name, dollar_amount)
-  VALUES ("Third Group", 50);
-
+  -- Set michelle as admin
   INSERT INTO users_groups (users_id, groups_id, admin)
   VALUES (1, 1, 1);
+  
 
+  INSERT INTO groups (group_name, dollar_amount)
+  VALUES ("Oscar's Group", 20);
+  -- Set Oscar as admin
   INSERT INTO users_groups (users_id, groups_id, admin)
-  VALUES (1, 2, 1);
+  VALUES (2, 2, 1);  
+  
 
+  INSERT INTO groups (group_name, dollar_amount)
+  VALUES ("Jorge's Group", 50);
+    -- set oscar as admin
   INSERT INTO users_groups (users_id, groups_id, admin)
-  VALUES (1, 3, 1);
+  VALUES (3, 3, 1);
 
--- When a user is added to the group
+-- When a user is added to a group
 
+    -- Michelle added to other 2
+  INSERT INTO users_groups (users_id, groups_id)
+  VALUES (1, 2);
+  --
+  INSERT INTO users_groups (users_id, groups_id)
+  VALUES (1, 3);
+  
+    -- Oscar added to other 2
   INSERT INTO users_groups (users_id, groups_id)
   VALUES (2, 1);
-
-  INSERT INTO users_groups (users_id, groups_id)
-  VALUES (3, 1);
-  
-  INSERT INTO users_groups(users_id, groups_id)
-  VALUES (2, 2);
-  
+  --
   INSERT INTO users_groups(users_id, groups_id)
   VALUES (2, 3);
+  
+      -- Jorge added to other 2
+  INSERT INTO users_groups (users_id, groups_id)
+  VALUES (3, 1);
+  --
+  INSERT INTO users_groups(users_id, groups_id)
+  VALUES (3, 2);
