@@ -18,14 +18,19 @@
   VALUES ("Original Gift Buddies", 50);
 
   INSERT INTO groups (group_name, dollar_amount)
-  VALUES ("sECOND Group", 50);
+  VALUES ("Second Group", 50);
 
   INSERT INTO groups (group_name, dollar_amount)
   VALUES ("Third Group", 50);
 
-  INSERT INTO users_groups (users_id, groups_id, role)
-  VALUES (1, 1, "admin");
+  INSERT INTO users_groups (users_id, groups_id, admin)
+  VALUES (1, 1, 1);
 
+  INSERT INTO users_groups (users_id, groups_id, admin)
+  VALUES (1, 2, 1);
+
+  INSERT INTO users_groups (users_id, groups_id, admin)
+  VALUES (1, 3, 1);
 
 -- When a user is added to the group
 

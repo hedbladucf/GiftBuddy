@@ -30,7 +30,7 @@ CREATE TABLE `users` (
   `users_id` INT NOT NULL,
   `groups_id` INT NOT NULL,
   `assigned_user_id` INT NOT NULL DEFAULT 0,
-  `role` VARCHAR(45) NOT NULL DEFAULT "user",
+  `admin` TINYINT NOT NULL DEFAULT 0,
   `sent` TINYINT NOT NULL DEFAULT 0,
   `received` TINYINT NOT NULL DEFAULT 0,
   `createdAt` DATETIME DEFAULT current_timestamp,

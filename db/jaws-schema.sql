@@ -5,7 +5,7 @@ DROP TABLE `p2o40rwbj6zuxy26`.`groups`;
 
 use p2o40rwbj6zuxy26;
 
-CREATE TABLE `users` (
+CREATE TABLE `p2o40rwbj6zuxy26`.`users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(99) NOT NULL,
   `address` varchar(45) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `users` (
   `users_id` INT NOT NULL,
   `groups_id` INT NOT NULL,
   `assigned_user_id` INT NOT NULL DEFAULT 0,
-  `role` VARCHAR(45) NOT NULL DEFAULT "user",
+  `admin` TINYINT NOT NULL DEFAULT 0,
   `sent` TINYINT NOT NULL DEFAULT 0,
   `received` TINYINT NOT NULL DEFAULT 0,
   `createdAt` DATETIME DEFAULT current_timestamp,

@@ -25,6 +25,9 @@ router.post('/home', function(req,res) {
 
 				var userGroupsObject = {gifts: data};
 
+				// console.log(data);
+				console.log(userGroupsObject);
+
 				res.render('home', userGroupsObject)
 			});
 
