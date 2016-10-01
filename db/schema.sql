@@ -10,6 +10,8 @@ CREATE TABLE `project_db`.`users` (
   `address` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `createdAt` DATETIME DEFAULT current_timestamp,
+  `updatedAt` DATETIME DEFAULT current_timestamp ON UPDATE current_timestamp,
   PRIMARY KEY (`id`));
   
   CREATE TABLE `project_db`.`groups` (
@@ -17,6 +19,7 @@ CREATE TABLE `project_db`.`users` (
   `group_name` VARCHAR(45) NOT NULL,
   `dollar_amount` INT NOT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
+  `createdAt` DATETIME DEFAULT current_timestamp,
   PRIMARY KEY (`id`));
 
   CREATE TABLE `project_db`.`users_groups` (
@@ -27,6 +30,7 @@ CREATE TABLE `project_db`.`users` (
   `role` VARCHAR(45) NOT NULL DEFAULT "user",
   `sent` TINYINT NOT NULL DEFAULT 0,
   `received` TINYINT NOT NULL DEFAULT 0,
+  `createdAt` DATETIME DEFAULT current_timestamp,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`users_id`) REFERENCES users(`id`),
   FOREIGN KEY (`groups_id`) REFERENCES groups(`id`));
