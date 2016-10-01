@@ -6,7 +6,7 @@
   VALUES ("Michelle Hettinger", "513 Oakwood Court, 32714", "mellowmichellehet@gmail.com", "michelle41989");
   
   INSERT INTO users (full_name, address, email, password)
-  VALUES ("Oscar Hedblad", "something", "something@something", "something");
+  VALUES ("Oscar Hedblad", "something", "Q@Q", "q");
  
   INSERT INTO users (full_name, address, email, password)
   VALUES ("Jorge Rivas", "something2", "something2@something", "something");
@@ -39,7 +39,13 @@
 
   INSERT INTO users_groups (users_id, groups_id)
   VALUES (3, 1);
-
+  
+  INSERT INTO users_groups(users_id, groups_id)
+  VALUES (2, 2);
+  
+  INSERT INTO users_groups(users_id, groups_id)
+  VALUES (2, 3);
+  
 -- Take a look at the users_groups table!
 
   SELECT * FROM project_db.users_groups;
