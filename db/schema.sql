@@ -4,15 +4,18 @@ create database project_db;
 
 use project_db;
 
-CREATE TABLE `project_db`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `full_name` VARCHAR(99) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `createdAt` DATETIME DEFAULT current_timestamp,
-  `updatedAt` DATETIME DEFAULT current_timestamp ON UPDATE current_timestamp,
-  PRIMARY KEY (`id`));
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(99) NOT NULL,
+  `address` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
   
   CREATE TABLE `project_db`.`groups` (
   `id` INT NOT NULL AUTO_INCREMENT,

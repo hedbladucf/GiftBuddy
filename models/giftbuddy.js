@@ -25,6 +25,12 @@ var giftObject = {
         orm.update(tableInput, objColVals, condition, function(res){
             cb(res);
         });
+    },
+
+    logOn: function(email, cb){
+        orm.logOn(email, function(res){
+            cb(res);
+        })
     }
     
 };

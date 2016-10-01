@@ -9,13 +9,19 @@
   VALUES ("Oscar Hedblad", "something", "something@something", "something");
  
   INSERT INTO users (full_name, address, email, password)
-  VALUES ("Jorge Rivas", "something", "something@something", "something");
+  VALUES ("Jorge Rivas", "something2", "something2@something", "something");
   
   
 -- When a group is created. The creator is assigned as admin
   
   INSERT INTO groups (group_name, dollar_amount)
   VALUES ("Original Gift Buddies", 50);
+
+  INSERT INTO groups (group_name, dollar_amount)
+  VALUES ("sECOND Group", 50);
+
+  INSERT INTO groups (group_name, dollar_amount)
+  VALUES ("Third Group", 50);
 
   INSERT INTO users_groups (users_id, groups_id, role)
   VALUES (1, 1, "admin");

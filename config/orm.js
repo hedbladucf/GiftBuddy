@@ -67,7 +67,17 @@ var orm = {
             if (err) throw err;
             cb(result);
         });
+    },
 
+    logOn: function(email, cb){
+        var queryString = "select users_groups.id, users_groups.groups_id, users_groups.groups_email users_groups.role, groups.group_name,  groups.dollar_amount FROM users_groups JOIN groups ON users_groups.groups_id = groups.id WHERE users_groups.users_email = (?)"
+
+        console.log(queryString);
+
+        connection.query(queryString, [email], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
 
     }
 
