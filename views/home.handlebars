@@ -2,7 +2,7 @@
 
 <div class="jumbotron">
   <div class="container text-center">
-    <h1>Hi! {this.firstName}</h1>
+    <h1>Hi! {{this.firstName}}</h1>
     <p>View and Edit Groups</p>
   </div>
 </div>
@@ -31,55 +31,24 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName1</div>
-        <div class="panel-body"><button class="btn-primary">Edit</button></div>
-        <div class="panel-footer">Max spending: $</div>
+    {{#each groups_data}}
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">{{this.groups_name}}</div>
+            <div class="panel-body">
+              {{#if this.admin}}
+                <button id="editButton" class="btn-primary">Edit</button>
+              {{else}}
+                <button id="leaveButton" class="btn-primary">Leave</button>
+              {{/if}}
+            </div>
+          <div class="panel-footer">Max spending: ${{this.dollar_amount}}</div>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName2</div>
-        <div class="panel-body"><button class="btn-primary">Edit</button></div>
-        <div class="panel-footer">Max spending: $$</div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName3</div>
-        <div class="panel-body"><button class="btn-primary">Edit</button></div>
-        <div class="panel-footer">Max spending: $$$</div>
-      </div>
-    </div>
+    {{/each}}
   </div>
 </div><br>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName4</div>
-        <div class="panel-body"><button class="btn-primary">Leave</button></div>
-        <div class="panel-footer">Max spending: $</div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName5</div>
-        <div class="panel-body"><button class="btn-primary">Leave</button></div>
-        <div class="panel-footer">Max spending: $$</div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">GroupName6</div>
-        <div class="panel-body"><button class="btn-primary">Leave</button></div>
-        <div class="panel-footer">Max spending: $$$</div>
-      </div>
-    </div>
-  </div>
-</div><br><br>
 
 <footer class="container-fluid text-center">
   <!-- <p>Edit Groups</p> -->
@@ -88,3 +57,20 @@
   </form>
 </footer>
 
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#leaveButton').on('click', function(){
+
+      console.log('Clicked LEAVE button.');
+        // $.post("demo_test_post.asp",
+        // {
+        //   groupId: ""
+        // },
+        // function(data,status){
+        //     alert("Data: " + data + "\nStatus: " + status);
+        // });
+    });
+});
+
+</script>
