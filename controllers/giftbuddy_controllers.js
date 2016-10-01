@@ -22,13 +22,11 @@ router.get('/home', function(req, res){
 router.post('/auth', function(req,res) {
 
 	GB.verifyUser('users', req.body.email, req.body.password, function(data){
-		console.log(data);
-		console.log(data[0]);
 
-		var data = data[0];
-		console.log(data);
+		// console.log(data);
+		console.log(data[0].usersFound + "users found");
 
-		if (data){
+		if (data[0].usersFound == 1){
 			res.redirect('/home')
 		} else {
 			res.redirect('/')

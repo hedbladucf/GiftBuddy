@@ -43,7 +43,7 @@ var orm = {
     },
 
     verifyUser: function(tableInput, email, password, cb){
-    	var queryString = 'SELECT count(*) FROM ' + tableInput + ' WHERE email = (?) and password = (?)';
+    	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?)';
 
       	console.log(queryString);
 
