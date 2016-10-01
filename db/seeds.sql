@@ -15,10 +15,10 @@
 -- When a group is created. The creator is assigned as admin
   
   INSERT INTO groups (group_name, dollar_amount)
-  VALUES ("Original Gift Buddies", 50);
+  VALUES ("Original Gift Buddies", 10);
 
   INSERT INTO groups (group_name, dollar_amount)
-  VALUES ("Second Group", 50);
+  VALUES ("Second Group", 20);
 
   INSERT INTO groups (group_name, dollar_amount)
   VALUES ("Third Group", 50);

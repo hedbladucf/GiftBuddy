@@ -70,7 +70,7 @@ var orm = {
     },
 
     logOn: function(email, cb){
-        var queryString = "SELECT users_groups.id, users_groups.groups_id, users_groups.admin, groups.group_name, groups.dollar_amount, users.email FROM users_groups JOIN groups ON users_groups.groups_id = groups.id JOIN users ON users_groups.users_id = users.id WHERE users.email = (?)";
+        var queryString = "SELECT groups.g_id, users.u_id, groups.group_name, users_groups.admin,  groups.dollar_amount FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE users.email = (?)";
 
         console.log(queryString);
 
