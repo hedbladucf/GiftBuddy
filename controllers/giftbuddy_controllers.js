@@ -10,7 +10,6 @@ router.get('/', function(req,res) {
 	res.render('index')
 });
 
-
 //Route for user authentication
 router.post('/home', function(req,res) {
 
@@ -23,12 +22,12 @@ router.post('/home', function(req,res) {
 
 			GB.logOn(req.body.email, function(data){
 
-				var userGroupsObject = {gifts: data};
+				var users_groupsObj = {gifts: data};
 
 				// console.log(data);
-				console.log(userGroupsObject);
+				console.log(users_groupsObj);
 
-				res.render('home', userGroupsObject)
+				res.render('home', users_groupsObj)
 			});
 
 
@@ -37,6 +36,23 @@ router.post('/home', function(req,res) {
 		}
 	});
 });
+
+router.get('/group/:id', function(req, res){
+
+	var groupsID = req.params.id;
+
+	GB.allInGroup(groupsID, function(data){
+		var usersInGroupObj = {users: data};
+
+		console.log(usersInGroupObj);
+
+		res.render('group', usersInGroupObj);
+	})
+})
+
+
+
+
 
 // //Route for user sign up
 // router.post('/signup', function(req,res) {

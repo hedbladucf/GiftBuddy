@@ -79,6 +79,17 @@ var orm = {
             cb(result);
         });
 
+    },
+
+    allInGroup: function(groupsID, cb){
+        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
+
+        console.log(queryString);
+
+        connection.query(queryString, [groupsID], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });  
     }
 
 
