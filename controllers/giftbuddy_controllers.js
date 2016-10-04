@@ -46,7 +46,7 @@ router.get('/group/:id', function(req, res){
 
 		console.log(usersInGroupObj);
 
-		res.render('group', usersInGroupObj);
+		res.render('groups', usersInGroupObj);
 	})
 })
 

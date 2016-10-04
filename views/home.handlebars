@@ -2,7 +2,7 @@
 
 <div class="jumbotron">
   <div class="container text-center">
-    <h1>Hi! {{this.firstName}}</h1>
+    <h1>Hi! {{this.full_name}}</h1>
     <p>View and Edit Groups</p>
   </div>
 </div>
@@ -31,15 +31,17 @@
 
 <div class="container">
   <div class="row">
-    {{#each groups_data}}
+    {{#each gifts}}
       <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">{{this.groups_name}}</div>
+        <div class="panel panel-primary" id="group-{{this.g_id}}">
+          <div class="panel-heading">{{this.group_name}}</div>
             <div class="panel-body">
+            <pre>{{this.g_id}}. {{this.group_name}}</pre>
+            <button class="viewButton btn-primary" data-group="{{this.g_id}}">View</button>
               {{#if this.admin}}
-                <button id="editButton" class="btn-primary">Edit</button>
+                <button class="editButton btn-primary" data-group="{{this.g_id}}">Edit</button>
               {{else}}
-                <button id="leaveButton" class="btn-primary">Leave</button>
+                <button class="leaveButton btn-primary" data-group="{{this.g_id}}">Leave</button>
               {{/if}}
             </div>
           <div class="panel-footer">Max spending: ${{this.dollar_amount}}</div>
@@ -59,17 +61,26 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function(){
-    $('#leaveButton').on('click', function(){
+  $(document).ready(function()
+  {
+    $(document.body).on('click', '.leaveButton', function(){
 
-      console.log('Clicked LEAVE button.');
-        // $.post("demo_test_post.asp",
-        // {
-        //   groupId: ""
-        // },
-        // function(data,status){
-        //     alert("Data: " + data + "\nStatus: " + status);
-        // });
+      	var g_id = $(this).data('group');
+      	console.log(g_id);
+      	
+        $.post("/leave/"+g_id, function( data ) {
+  			$(this).hide();
+		});
+    });
+
+    $(document.body).on('click', '.viewButton', function(){
+
+      	var g_id = $(this).data('group');
+      	console.log(g_id);
+      	
+        $.get("/group/"+g_id, function( data ) {
+        	console.log(data.usersInGroupObj);
+		});
     });
 });
 
