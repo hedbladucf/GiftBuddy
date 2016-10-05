@@ -42,6 +42,32 @@ var orm = {
         });
     },
 
+
+    addUserToGroup: function(tableInput, users_id, groups_id, admin, cb){
+        var queryString = 'INSERT INTO ' + tableInput + ' (users_id, groups_id, admin) ';
+        queryString += 'VALUES (' + users_id + ', ' + groups_id + ',' + admin + ');';
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+
+    findGroup: function(tableInput, groupName, cb){
+        var queryString = 'SELECT groups.g_id FROM' + tableInput + 'WHERE groups.group_name = (?);';
+
+        console.log(queryString);
+
+        connection.query(queryString, [groupName], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+
+    }
+
+
     verifyUser: function(tableInput, email, password, cb){
     	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?)';
 

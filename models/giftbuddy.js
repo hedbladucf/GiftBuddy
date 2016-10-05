@@ -12,13 +12,25 @@ var giftObject = {
     createGroup: function(tableInput, group_name, dollar_amount, cb){
     	orm.createGroup(tableInput, group_name, dollar_amount, function(result){
     		cb(result);
-    	})
+    	});
     },
+
+    addUserToGroup: function(tableInput, users_id, groups_id, admin, cb){
+        orm.addToGroup(tableInput, group_name, dollar_amount, function(result){
+            cb(result);
+        });
+    },
+
+    findGroup: function(tableInput, groupName, cb){
+        orm.findGroup(tableInput, group_name, function(result){
+            cb(result);
+        });
+    }
 
     verifyUser: function(tableInput, email, password, cb){
     	orm.verifyUser(tableInput, email, password, function(result){
     		cb(result);
-    	})
+    	});
     },
 
     update: function(tableInput, objColVals, condition, cb){
@@ -30,13 +42,13 @@ var giftObject = {
     logOn: function(email, cb){
         orm.logOn(email, function(res){
             cb(res);
-        })
+        });
     },
 
     allInGroup: function(groupsID, cb){
         orm.allInGroup(groupsID, function(res){
             cb(res);
-        })
+        });
     }
     
 };

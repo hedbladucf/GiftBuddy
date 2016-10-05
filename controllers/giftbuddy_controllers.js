@@ -84,20 +84,54 @@ router.post('/users/create', function(req, res){
 				res.redirect('/')
 			}
 		});
-
-
 	});
 });
 
 
 //Route for creating a group
 router.post('/groups/create', function(req, res){
-	console.log(req.body);
 
-	GB.createGroup('groups', req.body.group_name, req.body.dollar_amount, function(data){
-		res.redirect('/')
-	})
+	console.log("creating group now: " + req.body);
+
+	var users_id = req.body.id;
+
+	var group_name = req.body.group_name;
+	var dollar_amount = req.body.dollar_amount;
+
+	//Create the group with name and dollar amount
+	GB.createGroup('groups', group_name, body.dollar_amount, function(data){
+		
+		//Then grab the id of the newly created group
+		GB.findGroup('groups', group_name, function(data){
+
+			console.log(data);
+
+			var groups_id = data;
+
+
+			//Then add the users_groups entry
+			GB.addUserToGroup('users_groups', users_id, groups_id, 1, function(data){
+				console.log(data);
+
+				res.redirect('/users/group/'+groups_id);
+			});
+		});
+	});
 });
+
+
+//When an admin adds a user to a group
+router.post('/groups/addUser', function(req,res){
+
+	var users_id = req.body.users_id;
+	var groups_id = req.body.group_id;
+
+	//Add the user to the database and redirect to that group's page
+	GB.addUserToGroup('users_groups', users_id, groups_id, 0, function(data){
+		res.redirect('/users/group/'+groups_id);
+	});
+});
+
 
 
 
