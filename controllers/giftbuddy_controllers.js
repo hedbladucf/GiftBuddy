@@ -94,7 +94,6 @@ router.post('/groups/create', function(req, res){
 	console.log("creating group now: " + req.body);
 
 	var users_id = req.body.id;
-
 	var group_name = req.body.group_name;
 	var dollar_amount = req.body.dollar_amount;
 
@@ -104,14 +103,14 @@ router.post('/groups/create', function(req, res){
 		//Then grab the id of the newly created group
 		GB.findGroup('groups', group_name, function(data){
 
-			console.log(data);
+			console.log("group found " + data);
 
 			var groups_id = data;
 
 
 			//Then add the users_groups entry
 			GB.addUserToGroup('users_groups', users_id, groups_id, 1, function(data){
-				console.log(data);
+				console.log("user added " + data);
 
 				res.redirect('/users/group/'+groups_id);
 			});
