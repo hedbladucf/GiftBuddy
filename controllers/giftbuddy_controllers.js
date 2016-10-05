@@ -14,15 +14,13 @@ router.get('/', function(req,res) {
 router.post('/home', function(req,res) {
 
 	GB.verifyUser('users', req.body.email, req.body.password, function(data){
-
 		// console.log(data);
 		console.log(data[0].usersFound + " users found");
 
 		if (data[0].usersFound >= 1){
-
 			GB.logOn(req.body.email, function(data){
 
-				var users_groupsObj = {gifts: data};
+				var users_groupsObj = {groups: data};
 
 				// console.log(data);
 				console.log(users_groupsObj);
@@ -30,14 +28,15 @@ router.post('/home', function(req,res) {
 				res.render('home', users_groupsObj)
 			});
 
-
 		} else {
 			res.redirect('/')
 		}
 	});
 });
 
-router.get('/group/:id', function(req, res){
+
+//Route when user clicks on one of their groups
+router.get('/users/group/:id', function(req, res){
 
 	var groupsID = req.params.id;
 
@@ -46,11 +45,43 @@ router.get('/group/:id', function(req, res){
 
 		console.log(usersInGroupObj);
 
-		res.render('groups', usersInGroupObj);
+		res.render('singlegroup', usersInGroupObj);
 	})
 })
 
+router.post('/users/create', function(req, res){
 
+	var fullName = req.body.firstName + " " + req.body.lastName;
+	var newEmail = req.body.email;
+	var newPass = req.body.password;
+
+	GB.createUser('users', fullName, newEmail, newPass, function(data){
+
+		GB.verifyUser('users', newEmail, newPass, function(data){
+			// console.log(data);
+			console.log(data[0].usersFound + " users found");
+
+			if (data[0].usersFound >= 1){
+				GB.logOn(req.body.email, function(data){
+
+					var users_groupsObj = {gifts: data};
+
+					// console.log(data);
+					console.log(users_groupsObj);
+
+					res.render('home', users_groupsObj)
+				});
+
+			} else {
+				res.redirect('/')
+			}
+		});
+
+
+	});
+
+
+})
 
 
 

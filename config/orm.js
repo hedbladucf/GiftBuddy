@@ -15,12 +15,12 @@ function objToSql(ob){
 
 
 
-
+ 
 /* OBJECT RELATIONAL MODEL */
 var orm = {
-    createUser: function(tableInput, full_name, address, email, password, cb) {
-        var queryString = 'INSERT INTO ' + tableInput + ' (full_name, address, email, password) ';
-        queryString += 'VALUES ("' + full_name + '", ' + address + '", ' + email + '", ' + password + ');';
+    createUser: function(tableInput, full_name, email, password, cb) {
+        var queryString = 'INSERT INTO ' + tableInput + ' (full_name, email, password) ';
+        queryString += 'VALUES ("' + full_name + '", "' + email + '", "' + password + '");';
 
         console.log(queryString);
 

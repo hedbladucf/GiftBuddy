@@ -7,7 +7,7 @@ use project_db;
 CREATE TABLE `project_db`.`users` (
   `u_id` INT NOT NULL AUTO_INCREMENT,
   `full_name` VARCHAR(99) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(45) DEFAULT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP,

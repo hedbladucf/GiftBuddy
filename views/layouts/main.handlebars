@@ -1,12 +1,6 @@
 <!DOCTYPE html>
- <!--
-Here is the main HTML where handlebars will render to
- -->
-
-<!DOCTYPE html>
 <html lang="en">
 	<head>
-	<title>GiftBuddy</title>
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
 
@@ -17,19 +11,20 @@ Here is the main HTML where handlebars will render to
 		<!-- Login Display -->
    		<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 
-		<title>Gift Buddy</title>
-
-
-
 		<!-- JQuery and Bootstrap -->
 		<script src="/static/assets/js/jquery.min.js"></script>
 		<script src="/static/assets/js/bootstrap.min.js"></script>
 
-		<script src="/static/assets/js/index.js"></script>
+		<title>Gift Buddy</title>
 
 	</head>
 	<body>
+
+		<!-- All other handlebars pages are rendered here -->
 		{{{ body }}}
 	
+
+		<!-- This is for the login/signup. If it is not here at the bottom, it doesn't work! -->
+		<script src="/static/assets/js/index.js"></script>
 	</body>
 </HTML>

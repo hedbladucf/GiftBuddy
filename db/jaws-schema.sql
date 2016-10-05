@@ -8,7 +8,7 @@ use p2o40rwbj6zuxy26;
 CREATE TABLE `p2o40rwbj6zuxy26`.`users` (
   `u_id` INT NOT NULL AUTO_INCREMENT,
   `full_name` VARCHAR(99) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(45) DEFAULT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP,
