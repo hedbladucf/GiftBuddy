@@ -9,52 +9,51 @@
 
 <div class="container">
   <div class="row">
-    <p>MEMBERS</p>
     <div class="col-lg-3">
-      <ul class="list-unstyled">
+        <h2 class="text-center">MEMBERS</h2>
+        <ul class="list-unstyled">
         {{#each users}}
-        <li>{{this.full_name}}</li>
+        <li class="text-center">{{this.full_name}}</li>
         {{/each}}
-      </ul>
+        </ul>
     </div>
-  </div>
-  <div class="row">
-    <p>DISQUS</p>
+
     <div class="col-lg-5">
-      <!-- DISQUS WIDGET -->
+        <h2 class="text-center">DISQUS</h2>
+        <!-- DISQUS WIDGET -->
     </div>
-  </div>
-  <div class="row">
-    <p>GIFTS</p>
     <div class="col-lg-4">
-      <div class="col-md-6">
-        <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th><strong>Sent</strong></th>
-          </tr>
-        </thead>
-          <tbody>
-          <tr>
-            <td>Item_Sent</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="col-md-6">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><strong>Recieved</strong></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Item_Recieved</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <h2 class="text-center">GIFTS</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th><strong>Sent</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Item_Sent</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th><strong>Recieved</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Item_Recieved</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
   </div>
 </div>
