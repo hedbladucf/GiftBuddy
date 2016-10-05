@@ -19,13 +19,14 @@ CREATE TABLE `p2o40rwbj6zuxy26`.`users` (
 
   
 CREATE TABLE `p2o40rwbj6zuxy26`.`groups` (
-  `g_id` INT NOT NULL AUTO_INCREMENT,
-  `group_name` VARCHAR(45) NOT NULL,
-  `dollar_amount` INT NOT NULL,
-  `active` TINYINT NOT NULL DEFAULT 1,
-  `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`g_id`)
+  `g_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(45) NOT NULL,
+  `dollar_amount` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`g_id`),
+  UNIQUE KEY `group_name_UNIQUE` (`group_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `p2o40rwbj6zuxy26`.`users_groups` (
