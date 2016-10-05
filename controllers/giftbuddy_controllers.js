@@ -5,12 +5,14 @@ var bp = require("body-parser");
 var GB = require("../models/giftbuddy.js");
 var router = express.Router();
 
+
 //Root, where users log in or sign up
 router.get('/', function(req,res) {
 	res.render('index')
 });
 
-//Route for user authentication
+
+//Route for user authentication and rendering home page
 router.post('/home', function(req,res) {
 
 	GB.verifyUser('users', req.body.email, req.body.password, function(data){
@@ -21,8 +23,11 @@ router.post('/home', function(req,res) {
 			GB.logOn(req.body.email, function(data){
 
 				var users_groupsObj = {groups: data};
+				var fullName = users_groupsObj.groups[0].full_name;
 
-				// console.log(data);
+				users_groupsObj = {groups:data, name: fullName};
+
+				console.log("Full name is " + fullName);
 				console.log(users_groupsObj);
 
 				res.render('home', users_groupsObj)
@@ -40,6 +45,7 @@ router.get('/users/group/:id', function(req, res){
 
 	var groupsID = req.params.id;
 
+	//Find all the users in that group and render them on the singlegroup page
 	GB.allInGroup(groupsID, function(data){
 		var usersInGroupObj = {users: data};
 
@@ -47,8 +53,10 @@ router.get('/users/group/:id', function(req, res){
 
 		res.render('singlegroup', usersInGroupObj);
 	})
-})
+});
 
+
+//When a user signs up, they are verified and home page rendered
 router.post('/users/create', function(req, res){
 
 	var fullName = req.body.firstName + " " + req.body.lastName;
@@ -79,34 +87,21 @@ router.post('/users/create', function(req, res){
 
 
 	});
+});
 
 
-})
+//Route for creating a group
+router.post('/groups/create', function(req, res){
+	console.log(req.body);
 
-
-
-// //Route for user sign up
-// router.post('/signup', function(req,res) {
-// 	console.log(req.body);
-
-// 	GB.createUser('users', req.body.full_name, req.body.address, req.bod.email, req.body.password, function(data){
-// 		res.redirect('/')
-// 	});
-// });
-
-// //Route for creating a group
-// router.post('/groupup', function(req, res){
-// 	console.log(req.body);
-
-// 	GB.createGroup('groups', req.body.group_name, req.body.dollar_amount, function(data){
-// 		res.redirect('/')
-// 	})
-// })
+	GB.createGroup('groups', req.body.group_name, req.body.dollar_amount, function(data){
+		res.redirect('/')
+	})
+});
 
 
 
-
-//Update
+//Update anything in the database
 router.put('/update', function(req,res) {
 	var condition = 'id = ' + req.body.id;
 
@@ -116,7 +111,7 @@ router.put('/update', function(req,res) {
 
 	console.log('condition', condition);
 
-	GB.update(table, {column: value, column2: value2}, condition, function(data){
+	GB.update(table, {column: value}, condition, function(data){
 		res.redirect('/home');
 	});
 });
