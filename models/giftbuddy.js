@@ -27,6 +27,12 @@ var giftObject = {
         });
     },
 
+    findUserID: function(tableInput, email, cb){
+        orm.findUserID(tableInput, email, function(result){
+            cb(result)
+        });
+    },
+
     verifyUser: function(tableInput, email, password, cb){
     	orm.verifyUser(tableInput, email, password, function(result){
     		cb(result);
@@ -39,8 +45,8 @@ var giftObject = {
         });
     },
 
-    logOn: function(email, cb){
-        orm.logOn(email, function(res){
+    logOn: function(userID, cb){
+        orm.logOn(userID, function(res){
             cb(res);
         });
     },

@@ -15,41 +15,67 @@ router.get('/', function(req,res) {
 //Route for user authentication and rendering home page
 router.post('/home', function(req,res) {
 
-	GB.verifyUser('users', req.body.email, req.body.password, function(data){
+	var userEmail = req.body.email;
+	var userPass = req.body.password;
+
+	//verifyUser matches email and password
+	GB.verifyUser('users', userEmail, userPass, function(data){
+		var numUsersFound = data[0].usersFound;
+
 		// console.log(data);
-		console.log(data[0].usersFound + " users found");
+		console.log(numUsersFound + " users found");
 
-		if (data[0].usersFound >= 1){
-			GB.logOn(req.body.email, function(data){
+		//If the user is found
+		if (numUsersFound == 1){
+			//Grab their id and name from the database, based off the provided email
+			GB.findUserID('users', userEmail, function(data){
+				// console.log(data);
 
-				var users_groupsObj = {groups: data};
-				var fullName = users_groupsObj.groups[0].full_name;
-				var user_id = users_groupsObj.groups[0].u_id;
+				var userID = data[0].u_id;
+				var fullName = data[0].full_name.split(" ");
 
-				users_groupsObj = {groups:data, name: fullName, id:user_id};
+				var firstName = fullName[0];
+				var lastName = fullName[1];
 
-				console.log("Full name is " + fullName);
-				console.log("Id is " + user_id);
-				console.log(users_groupsObj);
+				console.log("Full name " + firstName + " " + lastName);
 
-				res.render('home', users_groupsObj)
+				//Then render the page based on information provided by their id
+				GB.logOn(userID, function(data){
+
+					var users_groupsObj = {
+						groups:data, 
+						firstName: firstName, 
+						lastName: lastName,
+						userID:userID
+					};
+
+					console.log(users_groupsObj);
+
+					res.render('home', users_groupsObj);
+				});
+
 			});
 
 		} else {
-			res.redirect('/')
+			res.redirect('/');
 		}
 	});
 });
 
 
 //Route when user clicks on one of their groups
-router.get('/users/group/:id', function(req, res){
+router.get('/users/:uID/group/:gID', function(req, res){
 
-	var groupsID = req.params.id;
+	var userID = req.params.uID
+	var groupsID = req.params.gID;
 
 	//Find all the users in that group and render them on the singlegroup page
 	GB.allInGroup(groupsID, function(data){
-		var usersInGroupObj = {users: data};
+
+		var usersInGroupObj = {
+			users: data,
+			userID: userID,
+		};
 
 		console.log(usersInGroupObj);
 
@@ -67,25 +93,51 @@ router.post('/users/create', function(req, res){
 
 	GB.createUser('users', fullName, newEmail, newPass, function(data){
 
-		GB.verifyUser('users', newEmail, newPass, function(data){
+		//verifyUser matches email and password
+		GB.verifyUser('users', userEmail, userPass, function(data){
+			var numUsersFound = data[0].usersFound;
+
 			// console.log(data);
-			console.log(data[0].usersFound + " users found");
+			console.log(numUsersFound + " users found");
 
-			if (data[0].usersFound >= 1){
-				GB.logOn(req.body.email, function(data){
-
-					var users_groupsObj = {gifts: data};
-
+			//If the user is found
+			if (numUsersFound == 1){
+				//Grab their id and name from the database, based off the provided email
+				GB.findUserID('users', userEmail, function(data){
 					// console.log(data);
-					console.log(users_groupsObj);
 
-					res.render('home', users_groupsObj)
+					var userID = data[0].u_id;
+					var fullName = data[0].full_name.split(" ");
+
+					var firstName = fullName[0];
+					var lastName = fullName[1];
+
+					console.log("Full name " + firstName + " " + lastName);
+
+					//Then render the page based on information provided by their id
+					GB.logOn(userID, function(data){
+
+						var users_groupsObj = {
+							groups:data, 
+							firstName: firstName, 
+							lastName: lastName,
+							userID:userID
+						};
+
+						console.log(users_groupsObj);
+
+						res.render('home', users_groupsObj);
+					});
+
 				});
 
 			} else {
-				res.redirect('/')
+				res.redirect('/');
 			}
 		});
+
+
+
 	});
 });
 
@@ -99,9 +151,6 @@ router.get('/users/:id/addGroup', function(req, res){
 
 //Route for creating a group
 router.post('/users/:id/initializeGroup', function(req, res){
-
-
-	// console.log(req.body.group_name);
 
 	var users_id = req.params.id;
 	var group_name = req.body.group_name;
@@ -119,9 +168,9 @@ router.post('/users/:id/initializeGroup', function(req, res){
 
 			// //Then add the users_groups entry
 			GB.addUserToGroup('users_groups', users_id, groups_id, 1, function(data){
-				console.log("user # " + users_id + " added ");
+				console.log("User # " + users_id + " added ");
 
-				res.redirect('/users/group/'+groups_id);
+				res.redirect('/users/' + users_id + '/group/' + groups_id);
 			});
 		});
 	});

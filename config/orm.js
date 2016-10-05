@@ -67,9 +67,20 @@ var orm = {
 
     },
 
+    findUserID: function(tableInput, email, cb){
+        var queryString = 'SELECT users.u_id, users.full_name FROM users WHERE users.email = "' + email + '";';
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+
 
     verifyUser: function(tableInput, email, password, cb){
-    	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?)';
+    	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?);';
 
       	console.log(queryString);
 
@@ -85,7 +96,7 @@ var orm = {
         queryString += 'SET ';
         queryString += objToSql(objColVals);
         queryString += ' WHERE ';
-        queryString += condition;
+        queryString += condition + ";";
 
         console.log(queryString);
 
@@ -95,12 +106,12 @@ var orm = {
         });
     },
 
-    logOn: function(email, cb){
-        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, groups.group_name, users_groups.admin, groups.dollar_amount, groups.active FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE users.email = (?)";
+    logOn: function(userID, cb){
+        var queryString = "SELECT groups.g_id, users.u_id, groups.group_name, users_groups.admin, groups.dollar_amount, groups.active FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE users.u_id = (?)";
 
         console.log(queryString);
 
-        connection.query(queryString, [email], function(err, result) {
+        connection.query(queryString, [userID], function(err, result) {
             if (err) throw err;
             cb(result);
         });
