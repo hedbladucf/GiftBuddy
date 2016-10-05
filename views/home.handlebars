@@ -58,30 +58,3 @@
     <!-- <input type="email" class="form-control" size="50" placeholder="Email Address"> -->
   </form>
 </footer>
-
-<script type="text/javascript">
-
-  $(document).ready(function()
-  {
-    $(document.body).on('click', '.leaveButton', function(){
-
-      	var g_id = $(this).data('group');
-      	console.log(g_id);
-      	
-        $.post("/leave/"+g_id, function( data ) {
-  			$(this).hide();
-		});
-    });
-
-    $(document.body).on('click', '.viewButton', function(){
-
-      	var g_id = $(this).data('group');
-      	console.log(g_id);
-      	
-        $.get("/group/"+g_id, function( data ) {
-        	console.log(data.usersInGroupObj);
-		});
-    });
-});
-
-</script>
