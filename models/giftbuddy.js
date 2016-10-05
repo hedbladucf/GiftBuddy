@@ -16,16 +16,16 @@ var giftObject = {
     },
 
     addUserToGroup: function(tableInput, users_id, groups_id, admin, cb){
-        orm.addToGroup(tableInput, group_name, dollar_amount, function(result){
+        orm.addUserToGroup(tableInput, users_id, groups_id, admin, function(result){
             cb(result);
         });
     },
 
-    findGroup: function(tableInput, groupName, cb){
+    findGroup: function(tableInput, group_name, cb){
         orm.findGroup(tableInput, group_name, function(result){
             cb(result);
         });
-    }
+    },
 
     verifyUser: function(tableInput, email, password, cb){
     	orm.verifyUser(tableInput, email, password, function(result){

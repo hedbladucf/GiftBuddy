@@ -31,7 +31,7 @@ var orm = {
     },
 
     createGroup: function(tableInput, group_name, dollar_amount, cb){
-    	var queryString = 'INSERT INTO ' + tableInput + ' (group_name, admin_user_id, dollar_amount) ';
+    	var queryString = 'INSERT INTO ' + tableInput + ' (group_name, dollar_amount) ';
         queryString += 'VALUES ("' + group_name + '", ' + dollar_amount + ');';
 
       	console.log(queryString);
@@ -55,17 +55,17 @@ var orm = {
         });
     },
 
-    findGroup: function(tableInput, groupName, cb){
-        var queryString = 'SELECT groups.g_id FROM' + tableInput + 'WHERE groups.group_name = (?);';
+    findGroup: function(tableInput, group_name, cb){
+        var queryString = 'SELECT groups.g_id FROM ' + tableInput + ' WHERE groups.group_name = "' + group_name + '";';
 
         console.log(queryString);
 
-        connection.query(queryString, [groupName], function(err, result) {
+        connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);
         });
 
-    }
+    },
 
 
     verifyUser: function(tableInput, email, password, cb){

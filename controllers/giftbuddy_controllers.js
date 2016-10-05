@@ -24,10 +24,12 @@ router.post('/home', function(req,res) {
 
 				var users_groupsObj = {groups: data};
 				var fullName = users_groupsObj.groups[0].full_name;
+				var user_id = users_groupsObj.groups[0].u_id;
 
-				users_groupsObj = {groups:data, name: fullName};
+				users_groupsObj = {groups:data, name: fullName, id:user_id};
 
 				console.log("Full name is " + fullName);
+				console.log("Id is " + user_id);
 				console.log(users_groupsObj);
 
 				res.render('home', users_groupsObj)
@@ -87,30 +89,37 @@ router.post('/users/create', function(req, res){
 	});
 });
 
+//When clicking on add group button
+router.get('/users/:id/addGroup', function(req, res){
+
+	var idObj = {id: req.params.id};
+
+	res.render('addgroup', idObj);
+});
 
 //Route for creating a group
-router.post('/groups/create', function(req, res){
+router.post('/users/:id/initializeGroup', function(req, res){
 
-	console.log("creating group now: " + req.body);
 
-	var users_id = req.body.id;
+	// console.log(req.body.group_name);
+
+	var users_id = req.params.id;
 	var group_name = req.body.group_name;
 	var dollar_amount = req.body.dollar_amount;
 
 	//Create the group with name and dollar amount
-	GB.createGroup('groups', group_name, body.dollar_amount, function(data){
+	GB.createGroup('groups', group_name, dollar_amount, function(data){
 		
 		//Then grab the id of the newly created group
 		GB.findGroup('groups', group_name, function(data){
 
-			console.log("group found " + data);
+			// console.log(data[0].g_id);
 
-			var groups_id = data;
+			var groups_id = data[0].g_id;
 
-
-			//Then add the users_groups entry
+			// //Then add the users_groups entry
 			GB.addUserToGroup('users_groups', users_id, groups_id, 1, function(data){
-				console.log("user added " + data);
+				console.log("user # " + users_id + " added ");
 
 				res.redirect('/users/group/'+groups_id);
 			});
@@ -120,13 +129,14 @@ router.post('/groups/create', function(req, res){
 
 
 //When an admin adds a user to a group
-router.post('/groups/addUser', function(req,res){
+router.post('/groups/:id/addUser', function(req,res){
 
 	var users_id = req.body.users_id;
-	var groups_id = req.body.group_id;
+	var groups_id = req.params.id;
 
 	//Add the user to the database and redirect to that group's page
 	GB.addUserToGroup('users_groups', users_id, groups_id, 0, function(data){
+		console.log("user # " + users_id + " added ");
 		res.redirect('/users/group/'+groups_id);
 	});
 });
