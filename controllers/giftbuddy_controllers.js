@@ -34,6 +34,7 @@ router.get('/', function(req,res) {
 });
 
 //This is the route for when the user is redirected home through another route
+//Auth required. To revert, delete the if statement 
 router.get('/home', function(req, res){
 	console.log("works");
 
@@ -93,6 +94,7 @@ router.get('/home', function(req, res){
 
 
 //Route for user authentication and rendering home page
+//To revert, remove the line tempUserObject.startSession(...)
 router.post('/home', function(req,res) {
 
 	var userEmail = req.body.email;
@@ -147,6 +149,7 @@ router.post('/home', function(req,res) {
 
 
 //Route when user clicks on one of their groups
+//To revert, remove if statement
 router.get('/users/:uID/group/:gID', function(req, res){
 
 	var userID = req.params.uID;
@@ -191,6 +194,7 @@ router.get('/users/:uID/group/:gID', function(req, res){
 
 
 //When a user signs up, they are verified and home page rendered
+//No auth
 router.post('/users/create', function(req, res){
 
 	var fullName = req.body.firstName + " " + req.body.lastName;
@@ -248,6 +252,7 @@ router.post('/users/create', function(req, res){
 });
 
 //When clicking on add group button
+//To revert auth, delete if statements and verifyUserID function
 router.get('/users/:uID/addGroup', function(req, res){
 	var userID = req.params.uID
 	var idObj = {id: userID};
@@ -280,6 +285,7 @@ router.get('/users/:uID/addGroup', function(req, res){
 });
 
 //Intermediate for creating a group. Eventaully redirects.
+//No auth
 router.post('/users/:uID/initializeGroup', function(req, res){
 
 	var users_id = req.params.uID;
@@ -308,15 +314,16 @@ router.post('/users/:uID/initializeGroup', function(req, res){
 
 
 //When an admin adds a user to a group
-router.post('/groups/:id/addUser', function(req,res){
+//No auth
+router.post('/groups/:gID/addUser', function(req,res){
 
 	var users_id = req.body.users_id;
-	var groups_id = req.params.id;
+	var groups_id = req.params.gID;
 
 	//Add the user to the database and redirect to that group's page
 	GB.addUserToGroup('users_groups', users_id, groups_id, 0, function(data){
 		console.log("user # " + users_id + " added ");
-		res.redirect('/users/group/'+groups_id);
+		res.redirect('/users/' + users_id + 'group/' + groups_id);
 	});
 });
 
