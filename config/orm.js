@@ -78,6 +78,16 @@ var orm = {
         });
     },
 
+    findUserName: function(tableInput, userID, cb){
+        var queryString = 'SELECT users.full_name FROM users WHERE users.u_id = "' + userID + '";';
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
 
     verifyUser: function(tableInput, email, password, cb){
     	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?);';

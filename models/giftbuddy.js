@@ -34,6 +34,13 @@ var giftObject = {
         });
     },
 
+    findUserName: function(tableInput, userID, cb){
+        orm.findUserName(tableInput, userID, function(result){
+            cb(result);
+        });
+    },
+
+
     verifyUser: function(tableInput, email, password, cb){
     	orm.verifyUser(tableInput, email, password, function(result){
     		cb(result);

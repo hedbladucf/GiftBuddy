@@ -67,17 +67,14 @@ module.exports = function(app){
 	});
 
 	//Route for user authentication and rendering home page
-	app.get('/home', function(req,res) {
+	app.get('/home/:uID', function(req,res) {
 
-		// var user = auth.userI;
+		var userID = req.params.uID;
 
-		console.log(userInfo);
-
-		//Grab their id and name from the database, based off the provided email
-		GB.findUserID('users', userEmail, function(data){
+		//Grab their name
+		GB.findUserName('users', userID, function(data){
 			// console.log(data);
 
-			var userID = data[0].u_id;
 			var fullName = data[0].full_name.split(" ");
 
 			var firstName = fullName[0];
@@ -92,7 +89,7 @@ module.exports = function(app){
 					groups:data, 
 					firstName: firstName, 
 					lastName: lastName,
-					userID:userID
+					userID: userID
 				};
 
 				console.log(users_groupsObj);
@@ -101,8 +98,6 @@ module.exports = function(app){
 			});
 
 		});
-
-
 
 	});
 
@@ -115,8 +110,6 @@ module.exports = function(app){
 
 		var userID = req.params.uID;
 		var groupsID = req.params.gID;
-
-		console.log(tempUserObject);
 
 		//Find all the users in that group and render them on the singlegroup page
 		GB.allInGroup(groupsID, function(data){

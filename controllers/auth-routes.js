@@ -17,13 +17,6 @@ var Cookies     = require('cookies');
 // JWT used to create, sign, and verify auth tokens
 var jwt         = require('jsonwebtoken'); 
 
-var userInfo = {
-    username: null,
-    password: null
-};
-
-
-
 
 module.exports = function(app){
 	// API POST Requests
@@ -38,6 +31,10 @@ module.exports = function(app){
 		var userEmail = req.body.email;
 		var userPass = req.body.password;
 
+        var userInfo = {
+            username: userEmail,
+            password: userPass
+        }
 
         //verifyUser matches email and password, then ...
         GB.verifyUser('users', userEmail, userPass, function(data){
@@ -46,46 +43,48 @@ module.exports = function(app){
             // console.log(data);
             console.log(numUsersFound + " users found");
 
-            if (numUsersFound == 1){
 
-                userInfo.username = userEmail;
-                userInfo.password = userPass;
+            GB.findUserID('users', userEmail, function(data){
+                console.log(data);
+                var userID = data[0].u_id;
 
-                console.log(userInfo);
+                if (numUsersFound == 1){
+
+                    // IMPORTANT #1: 
+                    // =============
+                    // We use jwt to "sign" a web token, using the secret we created in server.js
+                    var token = jwt.sign(userInfo, app.get('jwtSecret'), {
+                        expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
+                    })
+
+                    // IMPORTANT #2: 
+                    // =============
+                    // We need to send this to our user with a cookie.
+                    // Whenever they try to visit a part of the site usually closed off,
+                    // our server will grab this cookie to ensure that s/he ha clearence.
+
+                    // The Cookie will be named 'access_token'.
+                    new Cookies(req, res).set('access_token', token, {
+                        httpOnly: true,
+                        secure: false
+                        });
+
+                    // for debug purposes
+                    console.log("Cookie Sent")
+
+                    //redirect home
+                    res.redirect('/home/' + userID);
+                }
+                // otherwise we tell the client that the password didn't match the username given
+                else{
+                    console.log("No Cookie Sent")
+                    res.send("Sorry Bro, but your access is denied.")
+                }
 
 
-                // IMPORTANT #1: 
-                // =============
-                // We use jwt to "sign" a web token, using the secret we created in server.js
-                var token = jwt.sign(userInfo, app.get('jwtSecret'), {
-                    expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
-                })
-
-                // IMPORTANT #2: 
-                // =============
-                // We need to send this to our user with a cookie.
-                // Whenever they try to visit a part of the site usually closed off,
-                // our server will grab this cookie to ensure that s/he ha clearence.
-
-                // The Cookie will be named 'access_token'.
-                new Cookies(req, res).set('access_token', token, {
-                    httpOnly: true,
-                    secure: false
-                    });
-
-                // for debug purposes
-                console.log("Cookie Sent")
 
 
-
-                //redirect home
-                res.redirect('/home');
-            }
-            // otherwise we tell the client that the password didn't match the username given
-            else{
-                console.log("No Cookie Sent")
-                res.send("Sorry Bro, but your access is denied.")
-            }
+            });
 
         });
 
@@ -139,9 +138,6 @@ module.exports = function(app){
                 // to move onto the API routes when the user has a good cookie.
                 next();
             }
-        })
+        });
     });
 }
-
-
-module.exports.userInfo = userInfo;
