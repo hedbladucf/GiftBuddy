@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 
 var GB = require("../models/giftbuddy.js");
-var auth = require("./auth-routes.js");
+var auth = require("./auth-routes.js").userInfo;
 
 
 
@@ -69,7 +69,9 @@ module.exports = function(app){
 	//Route for user authentication and rendering home page
 	app.get('/home', function(req,res) {
 
-		
+		// var user = auth.userI;
+
+		console.log(userInfo);
 
 		//Grab their id and name from the database, based off the provided email
 		GB.findUserID('users', userEmail, function(data){

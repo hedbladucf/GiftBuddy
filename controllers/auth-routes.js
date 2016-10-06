@@ -17,10 +17,12 @@ var Cookies     = require('cookies');
 // JWT used to create, sign, and verify auth tokens
 var jwt         = require('jsonwebtoken'); 
 
-var user = {
+var userInfo = {
     username: null,
     password: null
 };
+
+
 
 
 module.exports = function(app){
@@ -36,11 +38,6 @@ module.exports = function(app){
 		var userEmail = req.body.email;
 		var userPass = req.body.password;
 
-        var globalEmail = userEmail;
-
-        user.username = userEmail;
-        user.password = userPass;
-
 
         //verifyUser matches email and password, then ...
         GB.verifyUser('users', userEmail, userPass, function(data){
@@ -51,15 +48,16 @@ module.exports = function(app){
 
             if (numUsersFound == 1){
 
-                user.username = userEmail;
-                user.password = userPass;
+                userInfo.username = userEmail;
+                userInfo.password = userPass;
 
-                console.log(user);
+                console.log(userInfo);
+
 
                 // IMPORTANT #1: 
                 // =============
                 // We use jwt to "sign" a web token, using the secret we created in server.js
-                var token = jwt.sign(user, app.get('jwtSecret'), {
+                var token = jwt.sign(userInfo, app.get('jwtSecret'), {
                     expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
                 })
 
@@ -145,3 +143,5 @@ module.exports = function(app){
     });
 }
 
+
+module.exports.userInfo = userInfo;
