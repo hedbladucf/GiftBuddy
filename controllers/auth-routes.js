@@ -73,7 +73,7 @@ module.exports = function(app){
                     console.log("Cookie Sent")
 
                     //redirect home
-                    res.redirect('/home/' + userID);
+                    res.redirect('/home/' + userID + "/hidden/route");
                 }
                 // otherwise we tell the client that the password didn't match the username given
                 else{
