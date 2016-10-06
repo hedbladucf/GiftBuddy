@@ -6,9 +6,89 @@ var GB = require("../models/giftbuddy.js");
 var router = express.Router();
 
 
+var tempUserObject = {
+	email: null,
+	password: null,
+	sessionTime: 1000 * 60 * 1,
+
+	startSession: function(email, pass){
+		this.email = email;
+		this.password = pass;
+
+		//Set a timer for 10 seconds
+		setTimeout(function(){
+			tempUserObject.email = null;
+			tempUserObject.password = null;
+
+			console.log("Session ended");
+		}, this.sessionTime)
+	}
+};
+
+
+
+
 //Root, where users log in or sign up
 router.get('/', function(req,res) {
-	res.render('index')
+	res.render('index');
+});
+
+//This is the route for when the user is redirected home through another route
+router.get('/home', function(req, res){
+	console.log("works");
+
+	//If there is already a session in progress, assign email and user pass
+	if (tempUserObject.email && tempUserObject.password){
+		userEmail = tempUserObject.email;
+		userPass = tempUserObject.password;
+
+		//Then verify that email and password match
+		GB.verifyUser('users', userEmail, userPass, function(data){
+			var numUsersFound = data[0].usersFound;
+
+			// console.log(data);
+			console.log(numUsersFound + " users found");
+
+			//If the user is found
+			if (numUsersFound == 1){
+				//Grab their id and name from the database, based off the provided email
+				GB.findUserID('users', userEmail, function(data){
+					// console.log(data);
+
+					var userID = data[0].u_id;
+					var fullName = data[0].full_name.split(" ");
+
+					var firstName = fullName[0];
+					var lastName = fullName[1];
+
+					console.log("Full name " + firstName + " " + lastName);
+
+					//Then render the page based on information provided by their id
+					GB.logOn(userID, function(data){
+
+						var users_groupsObj = {
+							groups:data, 
+							firstName: firstName, 
+							lastName: lastName,
+							userID:userID
+						};
+
+						console.log(users_groupsObj);
+
+						res.render('home', users_groupsObj);
+					});
+
+				});
+
+			} else {
+				res.redirect('/');
+			}
+		});
+	}
+	//Otherwise make them log in again
+	else{
+		res.redirect('/');
+	}
 });
 
 
@@ -39,6 +119,9 @@ router.post('/home', function(req,res) {
 
 				console.log("Full name " + firstName + " " + lastName);
 
+				//Store their email and pass in this file. Then start the timer
+				tempUserObject.startSession(userEmail, userPass);
+
 				//Then render the page based on information provided by their id
 				GB.logOn(userID, function(data){
 
@@ -66,21 +149,44 @@ router.post('/home', function(req,res) {
 //Route when user clicks on one of their groups
 router.get('/users/:uID/group/:gID', function(req, res){
 
-	var userID = req.params.uID
+	var userID = req.params.uID;
 	var groupsID = req.params.gID;
 
-	//Find all the users in that group and render them on the singlegroup page
-	GB.allInGroup(groupsID, function(data){
+	console.log(tempUserObject);
 
-		var usersInGroupObj = {
-			users: data,
-			userID: userID,
-		};
+	//If there is data stored in the local session object
+	if (tempUserObject.email && tempUserObject.password){
 
-		console.log(usersInGroupObj);
+		//Verify that they are the user with uID
+		GB.verifyUserID('users', userID, function(data){
 
-		res.render('singlegroup', usersInGroupObj);
-	})
+			var fetchedEmail = data[0].email;
+			var fetchedPassword = data[0].password;
+
+			//If the temp pass/email match the one corresponding the the ID in the url
+			if (tempUserObject.email == fetchedEmail && tempUserObject.password == fetchedPassword){
+
+				//Find all the users in that group and render them on the singlegroup page
+				GB.allInGroup(groupsID, function(data){
+
+					var usersInGroupObj = {
+						users: data,
+						userID: userID,
+					};
+
+					console.log(usersInGroupObj);
+
+					res.render('singlegroup', usersInGroupObj);
+				});
+			}else {
+				res.redirect('/home');
+			}
+		});
+
+	}else{
+		res.redirect('/');
+	};
+
 });
 
 
@@ -94,7 +200,7 @@ router.post('/users/create', function(req, res){
 	GB.createUser('users', fullName, newEmail, newPass, function(data){
 
 		//verifyUser matches email and password
-		GB.verifyUser('users', userEmail, userPass, function(data){
+		GB.verifyUser('users', newEmail, newPass, function(data){
 			var numUsersFound = data[0].usersFound;
 
 			// console.log(data);
@@ -142,17 +248,41 @@ router.post('/users/create', function(req, res){
 });
 
 //When clicking on add group button
-router.get('/users/:id/addGroup', function(req, res){
+router.get('/users/:uID/addGroup', function(req, res){
+	var userID = req.params.uID
+	var idObj = {id: userID};
 
-	var idObj = {id: req.params.id};
+	//If there is a session in progress
+	if (tempUserObject.email && tempUserObject.password){
+		//Verify that they are the user with uID
+		GB.verifyUserID('users', userID, function(data){
 
-	res.render('addgroup', idObj);
+			var fetchedEmail = data[0].email;
+			var fetchedPassword = data[0].password;
+
+			//If the temp pass/email match the one corresponding the the ID in the url
+			if (tempUserObject.email == fetchedEmail && tempUserObject.password == fetchedPassword){
+
+				res.render('addgroup', idObj);
+			}
+			//If for some reason they don't match, redirect back home
+			else {
+				res.redirect('/home');
+			}
+		});
+	}
+	//If there is not a session, make them log in again
+	else {
+		res.redirect('/');
+	}
+
+
 });
 
-//Route for creating a group
-router.post('/users/:id/initializeGroup', function(req, res){
+//Intermediate for creating a group. Eventaully redirects.
+router.post('/users/:uID/initializeGroup', function(req, res){
 
-	var users_id = req.params.id;
+	var users_id = req.params.uID;
 	var group_name = req.body.group_name;
 	var dollar_amount = req.body.dollar_amount;
 

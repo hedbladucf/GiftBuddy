@@ -39,6 +39,12 @@ var giftObject = {
     	});
     },
 
+    verifyUserID: function(tableInput, userID, cb){
+        orm.verifyUserID(tableInput, userID, cb, function(result){
+            cb(result);
+        });
+    },
+
     update: function(tableInput, objColVals, condition, cb){
         orm.update(tableInput, objColVals, condition, function(res){
             cb(res);

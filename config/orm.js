@@ -90,6 +90,19 @@ var orm = {
         });
     },
 
+    verifyUserID: function(tableInput, userID, cb){
+        var queryString = 'SELECT users.email, users.password FROM ' + tableInput + ' WHERE users.u_id = ' + userID + ';';
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+
+    },
+
+
     update: function(tableInput, objColVals, condition, cb){
         var queryString = 'UPDATE ' + tableInput;
 
