@@ -3,6 +3,7 @@ var orm = require('../config/orm.js');
   
 // 
 var giftObject = {
+
     createUser: function(tableInput, full_name, email, password, cb) {
         orm.createUser(tableInput, full_name, email, password, function(result){
             cb(result);
@@ -61,8 +62,7 @@ var giftObject = {
         orm.allInGroup(groupsID, function(res){
             cb(res);
         });
-    }
-    
+    }    
 };
 
 module.exports = giftObject;
