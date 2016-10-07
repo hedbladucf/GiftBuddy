@@ -12,13 +12,13 @@
           <h1>Welcome Back!</h1>
           <form action="/auth" method="post">
             <div class="field-wrap">
-              <input type="email" name="email" required autocomplete="off" placeholder="Email" />
+              <input id="userEmail" type="email" name="email" required autocomplete="off" placeholder="Email" />
             </div>
             <div class="field-wrap">
               <!--<label>Password<span class="req">*</span></label> -->
               <input type="password" name="password" required autocomplete="off" placeholder="Password" />
             </div>
-            <button class="button button-block" type="submit">Log In</button>
+            <button id="loginBtn" class="button button-block" type="submit">Log In</button>
             <button class="button button-block">Facebook Log In</button>
           </form>
         </div>
@@ -50,3 +50,16 @@
       </div><!-- tab-content -->
 
     </div> <!-- /form -->
+
+    <script type="text/javascript">
+
+
+      $('#loginBtn').on('click', function(){
+        
+        var email = $('#userEmail').val().trim();
+
+        sessionStorage.setItem('email', email);
+
+      });
+  
+    </script>

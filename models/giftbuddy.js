@@ -69,7 +69,12 @@ var giftObject = {
         orm.allInGroup(groupsID, function(res){
             cb(res);
         });
-    }    
+    },
+    usersGroups: function(userID, cb){
+        orm.usersGroups(userID, function(res){
+            cb(res);
+        });
+    }
 };
 
 module.exports = giftObject;
