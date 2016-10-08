@@ -51,29 +51,41 @@ module.exports = function(app){
 	//They are brought to that groups page
 	app.get('/group/:gID', function(req,res){
 
-		var cookieToken = req.headers.cookie;
-		var cookieArray = cookieToken.split("--");
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
 
 		var groupID = req.params.gID;
 
-		GB.usersGroups(userID, function(data){
-			console.log(data);
-		});
+
+		//Make sure the user is in that group. There should only ever be 1 object returned, or a null object.
+		GB.userInGroup(userID, groupID, function(data){
+
+			console.log(data[0]);
+
+			//If data is returned, render the page
+			if (data[0]){
+				// If they are, render page
+				GB.allInGroup(groupID, function(data){
+
+					var usersInGroupObj = {
+						users: data,
+					};
+
+					console.log(usersInGroupObj);
+
+					res.render('singlegroup', usersInGroupObj);
+				});
+			}
+			//Otherwise bring them back to home page
+			else{
+				res.redirect('/home');
+			}
+		})
 
 
 
-		//Make sure the user is in that group. If they are, render page
-		GB.allInGroup(groupID, function(data){
-
-			var usersInGroupObj = {
-				users: data,
-			};
-
-			console.log(usersInGroupObj);
-
-			res.render('singlegroup', usersInGroupObj);
-		});
 	});
 
 //////////////////////////////////////////////////////////////////////////////

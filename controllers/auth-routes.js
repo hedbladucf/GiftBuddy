@@ -23,6 +23,7 @@ module.exports = function(app){
 	// Otherwise, they are denied access to the api route
 	// ---------------------------------------------------------------------------
 
+    //After entering user name and password and clicking submit, they are brought to this route
 	app.post('/auth', function(req, res){
         console.log("Authorizing");
 
@@ -34,54 +35,50 @@ module.exports = function(app){
             password: userPass
         };
 
-        //verifyUser matches email and password and redirect home with good cookie
-        GB.verifyUser('users', userEmail, userPass, function(data){
-            var numUsersFound = data[0].usersFound;
+            //Match email and password and redirect home with good cookie
+            GB.verifyCredentials('users', userEmail, userPass, function(data){
+                var numUsersFound = data[0].usersFound;
 
-            // console.log(data);
-            console.log(numUsersFound + " users found");
+                // console.log(data);
+                console.log(numUsersFound + " user found");
 
-            GB.findUserID('users', userEmail, function(data){
-                console.log(data);
-                var userID = data[0].u_id;
-
+                //If the email and pass match
                 if (numUsersFound == 1){
 
-                    // IMPORTANT #1: 
-                    // =============
-                    // We use jwt to "sign" a web token, using the secret we created in server.js
-                    var token = jwt.sign(userInfo, app.get('jwtSecret'), {
-                        expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
-                    })
+                    //Find the new user's id in the database based on the email they signed up with
+                    GB.findUserID('users', userEmail, function(data){
 
-                    // IMPORTANT #2: 
-                    // =============
-                    // We need to send this to our user with a cookie.
-                    // Whenever they try to visit a part of the site usually closed off,
-                    // our server will grab this cookie to ensure that s/he ha clearence.
+                        console.log(data);
+                        var userID = data[0].u_id;
 
-                    // The Cookie will be named 'access_token'.
-                    new Cookies(req, res).set(userID+"--token", token, {
-                        httpOnly: true,
-                        secure: false,
+                        // We use jwt to "sign" a web token, using the secret we created in server.js
+                        var token = jwt.sign(userInfo, app.get('jwtSecret'), {
+                            expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
                         });
 
+                        // We need to send this to our user with a cookie.
+                        // Whenever they try to visit a part of the site usually closed off,
+                        // our server will grab this cookie to ensure that s/he ha clearence.
 
-                    // for debug purposes
-                    console.log("Cookie Sent")
+                        // The Cookie will be named 'access_token'.
+                        new Cookies(req, res).set(userID+"--token", token, {
+                            httpOnly: true,
+                            secure: false,
+                            });
 
-                    //redirect home
-                    res.redirect('/home');
+                        console.log("Cookie Sent");
+
+                        //redirect home
+                        res.redirect('/home');
+                    });
                 }
-                // otherwise we tell the client that the password didn't match the username given
+                //If they dont match we tell the client that the password didn't match the username given
                 else{
-                    console.log("No Cookie Sent")
-                    res.send("Sorry Bro, but your access is denied.")
+                    console.log("Wrong password!");
+                    res.redirect("/");
                 }
 
             });
-
-        });
 
 	});
 
@@ -101,28 +98,27 @@ module.exports = function(app){
         //Create the user and then verify them
         GB.createUser('users', fullName, newEmail, newPass, function(data){
 
-            //Matches email and password and redirect home with good cookie
-            GB.verifyUser('users', newEmail, newPass, function(data){
+            //Match email and password and redirect home with good cookie
+            GB.verifyCredentials('users', newEmail, newPass, function(data){
                 var numUsersFound = data[0].usersFound;
 
                 // console.log(data);
                 console.log(numUsersFound + " users found");
 
-                GB.findUserID('users', newEmail, function(data){
-                    console.log(data);
-                    var userID = data[0].u_id;
+                //If the email and pass match
+                if (numUsersFound == 1){
 
-                    if (numUsersFound == 1){
+                    //Find the new user's id in the database based on the email they signed up with
+                    GB.findUserID('users', newEmail, function(data){
 
-                        // IMPORTANT #1: 
-                        // =============
+                        console.log(data);
+                        var userID = data[0].u_id;
+
                         // We use jwt to "sign" a web token, using the secret we created in server.js
                         var token = jwt.sign(userInfo, app.get('jwtSecret'), {
                             expiresIn: 1440 // Token is given but will expire in 24 minutes (requiring a re-login)
                         })
 
-                        // IMPORTANT #2: 
-                        // =============
                         // We need to send this to our user with a cookie.
                         // Whenever they try to visit a part of the site usually closed off,
                         // our server will grab this cookie to ensure that s/he ha clearence.
@@ -133,20 +129,17 @@ module.exports = function(app){
                             secure: false,
                             });
 
-
-                        // for debug purposes
-                        console.log("Cookie Sent")
+                        console.log("Cookie Sent");
 
                         //redirect home
                         res.redirect('/home');
-                    }
-                    // otherwise we tell the client that the password didn't match the username given
-                    else{
-                        console.log("No Cookie Sent")
-                        res.send("Sorry Bro, but your access is denied.")
-                    }
-
-                });
+                    });
+                }
+                //If they dont match we tell the client that the password didn't match the username given
+                else{
+                    console.log("Wrong password!");
+                    res.redirect("/");
+                }
 
             });
 

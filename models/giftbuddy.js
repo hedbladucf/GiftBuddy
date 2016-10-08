@@ -41,8 +41,8 @@ var giftObject = {
     },
 
 
-    verifyUser: function(tableInput, email, password, cb){
-    	orm.verifyUser(tableInput, email, password, function(result){
+    verifyCredentials: function(tableInput, email, password, cb){
+    	orm.verifyCredentials(tableInput, email, password, function(result){
     		cb(result);
     	});
     },
@@ -70,8 +70,8 @@ var giftObject = {
             cb(res);
         });
     },
-    usersGroups: function(userID, cb){
-        orm.usersGroups(userID, function(res){
+    userInGroup: function(userID, groupID, cb){
+        orm.userInGroup(userID, groupID, function(res){
             cb(res);
         });
     }

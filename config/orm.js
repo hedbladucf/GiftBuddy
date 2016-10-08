@@ -89,7 +89,7 @@ var orm = {
         });
     },
 
-    verifyUser: function(tableInput, email, password, cb){
+    verifyCredentials: function(tableInput, email, password, cb){
     	var queryString = 'SELECT count(*) AS usersFound FROM ' + tableInput + ' WHERE email = (?) and password = (?);';
 
       	console.log(queryString);
@@ -141,6 +141,7 @@ var orm = {
 
     },
 
+    //Find all users in a group
     allInGroup: function(groupsID, cb){
         var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
 
@@ -152,12 +153,13 @@ var orm = {
         });  
     },
 
-    usersGroups: function(userID, cb){
-        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE users.u_id = " + userID;
+    //Find a user in a group
+    userInGroup: function(userID, groupID, cb){
+        var queryString = "SELECT * FROM users_groups WHERE users_groups.users_id = (?) and users_groups.groups_id = (?);";
 
         console.log(queryString);
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, [userID,groupID], function(err, result) {
             if (err) throw err;
             cb(result);
         });  
