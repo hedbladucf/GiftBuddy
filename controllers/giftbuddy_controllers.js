@@ -168,6 +168,28 @@ module.exports = function(app){
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+	app.get('/group/myAccount', function(req, res){
+
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
+		var userID = cookieArray[0];
+
+
+		GB.userAccountInfo(userID, function(data){
+
+			var accountObj = {account: data};
+
+			res.render('account', accountObj);
+
+		});
+
+	});
+
+
+
+
+
 
 	//Update anything in the database
 	app.put('/update', function(req,res) {
@@ -183,6 +205,8 @@ module.exports = function(app){
 			res.redirect('/home');
 		});
 	});
+
+
 
 
 };

@@ -143,7 +143,7 @@ var orm = {
 
     //Find all users in a group
     allInGroup: function(groupsID, cb){
-        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
+        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin, users_groups.sent, users_groups.received FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
 
         console.log(queryString);
 
@@ -160,6 +160,16 @@ var orm = {
         console.log(queryString);
 
         connection.query(queryString, [userID,groupID], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });  
+    },
+    userAccountInfo: function(userID, cb){
+        var queryString = 'SELECT * FROM users WHERE users.u_id = ' + userID + ';';
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);
         });  
