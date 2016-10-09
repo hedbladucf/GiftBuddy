@@ -10,11 +10,12 @@ module.exports = function(app){
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-	//Then they are brought to the home page
+	//After logging in they are brought to the home page
 	app.get('/home', function(req, res){
 
-		var cookieToken = req.headers.cookie;
-		var cookieArray = cookieToken.split("--");
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
 
 		//Grab their name
@@ -48,7 +49,7 @@ module.exports = function(app){
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-	//They are brought to that groups page
+	//After clicking on a group, they are brought to that groups page
 	app.get('/group/:gID', function(req,res){
 
 		//Grab their id from the cookie
@@ -64,9 +65,9 @@ module.exports = function(app){
 
 			console.log(data[0]);
 
-			//If data is returned, render the page
+			//If data is returned (they are in the group) add buddy to group
 			if (data[0]){
-				// If they are, render page
+				//Render the group page with data about its users
 				GB.allInGroup(groupID, function(data){
 
 					var usersInGroupObj = {
@@ -82,31 +83,27 @@ module.exports = function(app){
 			else{
 				res.redirect('/home');
 			}
-		})
-
-
-
+		});
 	});
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-
-	//They are brought here
+	//After clicking add group, are brought here
 	app.get('/addGroup', function(req,res){
-		var cookieToken = req.headers.cookie;
-		var cookieArray = cookieToken.split("--");
+
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
-
-
 
 		res.render('addgroup');
 	});
 
 	//After filling out the add group form. Redirects user to the new group page
 	app.post('/initializeGroup', function(req, res){
-		var cookieToken = req.headers.cookie;
-		var cookieArray = cookieToken.split("--");
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
 
 		var group_name = req.body.group_name;
@@ -135,28 +132,41 @@ module.exports = function(app){
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+	//When the user clicks to add a friend
+	app.post('/group/:gID/addBuddy', function(req,res){
 
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
+		var userID = cookieArray[0];
 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
+		var groupID = req.params.gID;
 
-	app.post('/addBuddy', function(req,res){
-		//Add the user to the database and redirect to that group's page
-		GB.addUserToGroup('users_groups', userID, groups_id, 0, function(data){
-			console.log("user # " + userID + " added ");
+		//Make sure the user is in that group. There should only ever be 1 object returned, or a null object.
+		GB.userInGroup(userID, groupID, function(data){
 
-			res.redirect('/home');
-			
+			console.log(data[0]);
+
+			//If data is returned (they are in the group) add buddy to group
+			if (data[0]){
+				//Add the user to the database
+				GB.addUserToGroup('users_groups', userID, groupID, 0, function(data){
+					console.log("user # " + userID + " added to group # " + groupID);
+
+					//Then redirect to the group page
+					res.redirect('/group/' + groupID);
+				});
+			}
+			//Otherwise bring them back to home page
+			else{
+				res.redirect('/home');
+			}
 		});
 	});
 
 
-
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 
 	//Update anything in the database
