@@ -26,6 +26,12 @@
   border-color: #1ab188;
 }
 
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 html {
   overflow-y: scroll;
 }
