@@ -11,6 +11,7 @@ CREATE TABLE `p2o40rwbj6zuxy26`.`users` (
   `address` VARCHAR(45) DEFAULT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` varchar(45) NOT NULL,
+  `wishes` varchar(500) DEFAULT NULL,
   `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`u_id`),
