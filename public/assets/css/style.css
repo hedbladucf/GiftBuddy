@@ -2,12 +2,36 @@
   box-sizing: border-box;
 }
 
+/*#addGroupHeader {
+  color: black;
+  padding-top: 50px;
+  font-weight: bold;
+}*/
+
+#addGroupName, #addGroupAmount, #yourFullName,
+#yourEmail, #yourAddress, #yourPassword, #yourRetypePassword {
+  color: #1ab188;
+}
+
+#addGroupForm {
+  margin-top: 50px;
+}
+
+.btn-primary {
+  background-color: #1ab188;
+}
+
+.panel-primary > .panel-heading {
+  background-color: #1ab188;
+  border-color: #1ab188;
+}
+
 html {
   overflow-y: scroll;
 }
 
 body {
-  background: #c1bdba;
+  background: white;
   font-family: 'Titillium Web', sans-serif;
 }
 
@@ -195,7 +219,11 @@ textarea {
     }
    
     /* Add a gray background color and some padding to the footer */
-    footer {
+    footer{
       background-color: #f2f2f2;
       padding: 25px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      height:100px;
     }

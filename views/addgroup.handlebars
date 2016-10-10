@@ -1,12 +1,71 @@
 <!DOCTYPE HTML>
 
-<form action="/initializeGroup" method="post">
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Add Group</h1>
+    <p>Enter Name & Amount to create group.</p>
+  </div>
+</div>
 
-    <input type="text" name="group_name" required autocomplete="off" placeholder="name" />
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home/">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/addGroup">Add Group</a></li>
+        <!-- <li><a href="#">Contact</a></li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <!--<label>Password<span class="req">*</span></label> -->
-    <input type="text" name="dollar_amount" required autocomplete="off" placeholder="amount" />
+<div class="container" id="addGroupForm">
+	<div class="row">
+		<div class="col-md-12">
+			<form action="/initializeGroup" method="post">
 
-    <button class="button button-block" type="submit">Add Group</button>
+		    <div class="col-md-12">
+          <input id="addGroupName" type="text" name="group_name" required autocomplete="off" placeholder="Name of Group" />
 
-</form>
+          <input id="addGroupAmount" type="text" name="dollar_amount" required autocomplete="off" placeholder="Amount" />
+
+          <button id="addGroupButton" class="button button-block" type="submit">Add Group</button>
+        </div>
+        
+        <!-- <div class="col-md-3">
+          <div class="dropdown">
+            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">First</a></li>
+              <li><a href="#">Second</a></li>
+              <li><a href="#">Third</a></li>
+            </ul>
+          </div>
+        </div> -->
+        <!-- <div class="col-lg-3">
+          <h2 class="text-center">Group Members</h2>
+          <ul class="list-unstyled">
+          {{#each users}}
+          <li class="text-center">{{this.full_name}}</li>
+          {{/each}}
+          </ul>
+        </div> -->
+			</form>
+		</div>
+	</div>
+</div>
+
+<footer class="container-fluid text-center" style="bottom: 0;">
+  <form class="form-inline" style="font-size: 15pt;">Copyright GiftBuddy</form>
+</footer>
