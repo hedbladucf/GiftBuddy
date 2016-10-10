@@ -168,7 +168,7 @@ module.exports = function(app){
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-	app.get('/group/myAccount', function(req, res){
+	app.get('/yourAccount', function(req, res){
 
 		//Grab their id from the cookie
 		var cookie = req.headers.cookie;
@@ -180,7 +180,7 @@ module.exports = function(app){
 
 			var accountObj = {account: data};
 
-			res.render('account', accountObj);
+			res.render('youraccount', accountObj);
 
 		});
 

@@ -74,6 +74,12 @@ var giftObject = {
         orm.userInGroup(userID, groupID, function(res){
             cb(res);
         });
+    },
+
+    userAccountInfo: function(userID, cb){
+        orm.userAccountInfo(userID, function(res){
+            cb(res);
+        });
     }
 };
 
