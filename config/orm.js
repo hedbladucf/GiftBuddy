@@ -173,6 +173,30 @@ var orm = {
             if (err) throw err;
             cb(result);
         });  
+    },
+
+
+    allBesidesUser: function(userID, cb){
+        var queryString = 'select users.u_id, users.full_name from users where users.u_id != ' + userID;
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        }); 
+    },
+
+    yourBuddyInfo: function(userID, cb){
+        var queryString = 'select users.u_id, users.full_name, users.address, users.email, users.wishes from users_groups join users ON users_groups.assigned_user_id = users.u_id where users.u_id = ' + userID;
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) throw err;
+            cb(result);
+        }); 
+
     }
 
 

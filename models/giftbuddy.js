@@ -80,6 +80,18 @@ var giftObject = {
         orm.userAccountInfo(userID, function(res){
             cb(res);
         });
+    },
+
+    allBesidesUser: function(userID, cb){
+        orm.allBesidesUser(userID, function(res){
+            cb(res);
+        });
+    },
+
+    yourBuddyInfo: function(userID, cb){
+        orm.yourBuddyInfo(userID, function(res){
+            cb(res);
+        });
     }
 };
 
