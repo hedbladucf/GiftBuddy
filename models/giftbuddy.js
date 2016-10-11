@@ -53,8 +53,8 @@ var giftObject = {
         });
     },
 
-    update: function(tableInput, objColVals, condition, cb){
-        orm.update(tableInput, objColVals, condition, function(res){
+    updateAccount: function(tableInput, objColVals, userID, cb){
+        orm.update(tableInput, objColVals, userID, function(res){
             cb(res);
         });
     },
@@ -88,8 +88,8 @@ var giftObject = {
         });
     },
 
-    yourBuddyInfo: function(userID, cb){
-        orm.yourBuddyInfo(userID, function(res){
+    yourBuddyInfo: function(userID, groupID, cb){
+        orm.yourBuddyInfo(userID, groupID, function(res){
             cb(res);
         });
     }

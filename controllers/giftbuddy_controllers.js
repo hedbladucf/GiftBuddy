@@ -69,15 +69,18 @@ module.exports = function(app){
 				//Get data about all of this groups users users
 				GB.allInGroup(groupID, function(data){
 
-					var usersInfo data;
+					var usersInfo = data;
+					var groupName = data[0].group_name;
 
-					GB.yourBuddyInfo(userID, function(data){
+
+					GB.yourBuddyInfo(userID, groupID, function(data){
 
 						var buddyInfo = data;
 
 						var allPageInfo = {
+							groupName: groupName,
 							groupUsers: usersInfo,
-							buddyInfo: buddyInfo
+							yourBuddy: buddyInfo
 						}
 
 						console.log(allPageInfo);
@@ -188,10 +191,11 @@ module.exports = function(app){
 		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
 
-
 		GB.userAccountInfo(userID, function(data){
 
 			var accountObj = {account: data};
+
+			console.log(accountObj);
 
 			res.render('youraccount', accountObj);
 
@@ -200,26 +204,34 @@ module.exports = function(app){
 	});
 
 
+	//Update user account info
+	app.post('/updateAccount', function(req,res) {
+		console.log(req.body);
+
+		//Grab their id from the cookie
+		var cookie = req.headers.cookie;
+		var cookieArray = cookie.split("--");
+		var userID = cookieArray[0];
+
+		if (req.body.password == req.body.retype_password){
+			var accountObj = {
+				full_name: req.body.full_name,
+				email: req.body.email,
+				address: req.body.address,
+				wishes: req.body.wishes,
+				password: req.body.password
+			}
+
+			GB.updateAccount('users', accountObj, userID, function(data){
+				res.redirect('/yourAccount');
+			});
+		}
+		else {
+			res.redirect('/yourAccount')
+		}
 
 
 
-
-	//Update anything in the database
-	app.put('/update', function(req,res) {
-		var condition = 'id = ' + req.body.id;
-
-		var table = req.body.table;
-		var column = req.body.column;
-		var value = req.body.value;
-
-		console.log('condition', condition);
-
-		GB.update(table, {column: value}, condition, function(data){
-			res.redirect('/home');
-		});
 	});
-
-
-
 
 };

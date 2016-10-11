@@ -7,7 +7,7 @@ function objToSql(ob){
   var arr = [];
 
   for (var key in ob) {
-    arr.push(key + '=' + ob[key]);
+    arr.push(key + '= "' + ob[key] + '"');
   }
 
   return arr.toString();
@@ -113,13 +113,12 @@ var orm = {
     },
 
 
-    update: function(tableInput, objColVals, condition, cb){
+    update: function(tableInput, objColVals, userID, cb){
         var queryString = 'UPDATE ' + tableInput;
 
-        queryString += 'SET ';
+        queryString += ' SET ';
         queryString += objToSql(objColVals);
-        queryString += ' WHERE ';
-        queryString += condition + ";";
+        queryString += ' WHERE users.u_id = ' + userID;
 
         console.log(queryString);
 
@@ -143,7 +142,7 @@ var orm = {
 
     //Find all users in a group
     allInGroup: function(groupsID, cb){
-        var queryString = "SELECT groups.g_id, users.u_id, users.full_name, users.email, users_groups.admin, users_groups.sent, users_groups.received FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
+        var queryString = "SELECT groups.g_id, groups.group_name, users.u_id, users.full_name, users.email, users_groups.admin, users_groups.sent, users_groups.received FROM users_groups JOIN groups ON users_groups.groups_id = groups.g_id JOIN users ON users_groups.users_id = users.u_id WHERE groups.g_id = (?)";
 
         console.log(queryString);
 
@@ -187,12 +186,11 @@ var orm = {
         }); 
     },
 
-    yourBuddyInfo: function(userID, cb){
-        var queryString = 'select users.u_id, users.full_name, users.address, users.email, users.wishes from users_groups join users ON users_groups.assigned_user_id = users.u_id where users.u_id = ' + userID;
-
+    yourBuddyInfo: function(userID, groupID, cb){
+        var queryString = 'select users.u_id, users.full_name, users.address, users.email, users.wishes FROM users JOIN users_groups ON users_groups.assigned_user_id = users.u_id where users_groups.users_id = (?) AND users_groups.groups_id = (?)';
         console.log(queryString);
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, [userID, groupID], function(err, result) {
             if (err) throw err;
             cb(result);
         }); 

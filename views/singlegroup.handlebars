@@ -2,7 +2,7 @@
 
 <div class="jumbotron">
   <div class="container text-center">
-    <h1>GroupPage! {{this.group_name}}</h1>
+    <h1>{{groupName}}</h1>
     <p>Testing</p>
   </div>
 </div>
@@ -12,7 +12,7 @@
     <div class="col-lg-3">
         <h2 class="text-center">MEMBERS</h2>
         <ul class="list-unstyled">
-        {{#each users}}
+        {{#each groupUsers}}
         <li class="text-center">{{this.full_name}}</li>
         {{/each}}
         </ul>
@@ -21,6 +21,21 @@
     <div class="col-lg-5">
         <h2 class="text-center">DISQUS</h2>
         <!-- DISQUS WIDGET -->
+
+
+        <!-- Your buddy info! -->
+        <p>Didn't know where else to put this oscar you can just copy/paste!<p>
+
+        <h2>This is your Gift Buddy(Tm)!</h2>
+        {{#each yourBuddy}}
+            <p>
+                {{this.full_name}}  <br>
+                {{this.address}}    <br>
+                {{this.email}}      <br>
+                {{this.wishes}}     <br>
+            </p>
+        {{/each}}
+
     </div>
     <div class="col-lg-4">
         <h2 class="text-center">GIFTS</h2>
