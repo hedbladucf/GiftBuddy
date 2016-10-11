@@ -34,41 +34,14 @@
 		<div class="col-md-12">
 			<form action="/initializeGroup" method="post">
 
-		    <div class="col-md-4">
-          <input id="addGroupName" type="text" name="group_name" required autocomplete="off" placeholder="Name of Group" />
-
-          <input id="addGroupAmount" type="text" name="dollar_amount" required autocomplete="off" placeholder="Amount" />
-
-          <button id="addGroupButton" class="button button-block" type="submit">Add Group</button>
-        </div>
-        
         <div class="col-md-4">
           <div class="dropdown">
             <button style="width: 100%;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Group Members
             <span class="caret"></span></button>
             <ul class="dropdown-menu scrollable-menu" role="menu">
-              <li><a href="#">Second</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">First</a></li>
-              <li><a href="#">Second</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
-              <li><a href="#">Third</a></li>
+            {{#each users}}
+              <li><a href="#">{{this.full_name}}</a></li>
+            {{/each}}
             </ul>
           </div>
         </div>
@@ -76,11 +49,18 @@
         <div class="col-lg-4">
           <h2 class="text-center" style="margin-top: 0;">Selected Group Members</h2>
           <ul class="list-unstyled">
-          {{#each users}}
-          <li class="text-center">{{this.full_name}}</li>
-          {{/each}}
+            <li class="text-center">{{this.full_name}}</li>
           </ul>
         </div>
+
+        <div class="col-md-4">
+          <input id="addGroupName" type="text" name="group_name" required autocomplete="off" placeholder="Name of Group" />
+
+          <input id="addGroupAmount" type="text" name="dollar_amount" required autocomplete="off" placeholder="Amount" />
+
+          <button id="addGroupButton" class="button button-block" type="submit">Add Group</button>
+        </div>
+
 			</form>
 		</div>
 	</div>
