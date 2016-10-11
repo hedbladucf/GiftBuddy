@@ -102,7 +102,7 @@ module.exports = function(app){
 				users:data
 			}
 
-			res.render('addgroup');
+			res.render('addgroup', usersObj);
 		});
 	});
 
