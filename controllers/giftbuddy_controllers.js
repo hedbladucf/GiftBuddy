@@ -124,7 +124,7 @@ module.exports = function(app){
 
 		var group_name = req.body.group_name;
 		var dollar_amount = req.body.dollar_amount;
-
+		console.log(req.body);
 		//Create the group with name and dollar amount
 		GB.createGroup('groups', group_name, dollar_amount, function(data){
 			

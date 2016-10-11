@@ -34,23 +34,24 @@
 		<div class="col-md-12">
 			<form action="/updateAccount" method="post">
           {{#each account}}
-			     <p class="text-left">Full Name</p>
+			    <p class="text-left">Full Name</p>
 		        <input id="yourFullName" type="text" name="full_name" autocomplete="off" value="{{this.full_name}}" />
 
-				    <p class="text-left">Email Address</p>
+				<p class="text-left">Email Address</p>
 		        <input id="yourEmail" type="text" name="email" autocomplete="off" value="{{this.email}}" />
 
 		        <p class="text-left">Street Address</p>
 		        <input id="yourAddress" type="text" name="address" autocomplete="off" value="{{this.address}}" />
 
-            <p class="text-left">Wishes</p>
-            <input id="yourWishes" type="text" name="wishes" autocomplete="off" value="{{this.wishes}}" />
+	            <p class="text-left">Wishes</p>
+	            <input id="yourWishes" type="text" name="wishes" autocomplete="off" value="{{this.wishes}}" />
 
 		        <p class="text-left">Password</p>
-		          <input id="yourPassword" type="password" name="password" required autocomplete="off" value="{{this.password}}" />
+		        <input id="yourPassword" type="password" name="password" required autocomplete="off" value="{{this.password}}" />
 
 		        <p class="text-left">Retype Password</p>
-		        <input id="yourRetypePassword" type="text" name="retype_password" required autocomplete="off" />
+		        <input id="yourRetypePassword" type="password" name="retype_password" required autocomplete="off" value="{{this.password}}" />
+
             {{/each}}
 		        <button class="button button-block" type="submit">Submit Changes</button>
 			</form>

@@ -2,14 +2,9 @@
   box-sizing: border-box;
 }
 
-/*#addGroupHeader {
-  color: black;
-  padding-top: 50px;
-  font-weight: bold;
-}*/
-
 #addGroupName, #addGroupAmount, #yourFullName,
-#yourEmail, #yourAddress, #yourPassword, #yourRetypePassword {
+#yourEmail, #yourAddress, #yourPassword,
+#yourRetypePassword, #yourWishes {
   color: #1ab188;
 }
 
