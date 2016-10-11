@@ -97,7 +97,13 @@ module.exports = function(app){
 		var cookieArray = cookie.split("--");
 		var userID = cookieArray[0];
 
-		res.render('addgroup');
+		GB.allBesidesUser(userID, function(data){
+			var usersObj = {
+				users:data
+			}
+
+			res.render('addgroup');
+		});
 	});
 
 	//After filling out the add group form. Redirects user to the new group page
