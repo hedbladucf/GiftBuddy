@@ -59,7 +59,6 @@ module.exports = function(app){
 
 		var groupID = req.params.gID;
 
-
 		//Make sure the user is in that group. There should only ever be 1 object returned, or a null object.
 		GB.userInGroup(userID, groupID, function(data){
 
@@ -67,16 +66,24 @@ module.exports = function(app){
 
 			//If data is returned (they are in the group) add buddy to group
 			if (data[0]){
-				//Render the group page with data about its users
+				//Get data about all of this groups users users
 				GB.allInGroup(groupID, function(data){
 
-					var usersInGroupObj = {
-						users: data,
-					};
+					var usersInfo data;
 
-					console.log(usersInGroupObj);
+					GB.yourBuddyInfo(userID, function(data){
 
-					res.render('singlegroup', usersInGroupObj);
+						var buddyInfo = data;
+
+						var allPageInfo = {
+							groupUsers: usersInfo,
+							buddyInfo: buddyInfo
+						}
+
+						console.log(allPageInfo);
+
+						res.render('singlegroup', allPageInfo);
+					});
 				});
 			}
 			//Otherwise bring them back to home page
