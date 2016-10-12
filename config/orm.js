@@ -43,9 +43,14 @@ var orm = {
     },
 
 
-    addUserToGroup: function(tableInput, users_id, groups_id, admin, cb){
+    addUsersToGroup: function(tableInput, members, cb){
+
         var queryString = 'INSERT INTO ' + tableInput + ' (users_id, groups_id, admin) ';
-        queryString += 'VALUES (' + users_id + ', ' + groups_id + ',' + admin + ');';
+        queryString += 'VALUES ';
+
+        for (var i=0; i<members.length; i++){
+            queryString += '(' + members[i].users_id + ', ' + members[i].groups_id + ',' + members[i].admin + ')';
+        }
 
         console.log(queryString);
 

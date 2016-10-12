@@ -136,8 +136,8 @@ module.exports = function(app){
 				var groups_id = data[0].g_id;
 
 				// //Then add the users_groups entry
-				GB.addUserToGroup('users_groups', userID, groups_id, 1, function(data){
-					console.log("User # " + userID + " added ");
+				GB.addUsersToGroup('users_groups', members, function(data){
+					console.log(members);
 
 					res.redirect('/group/' + groups_id);
 				});
