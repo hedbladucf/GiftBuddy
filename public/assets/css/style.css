@@ -12,6 +12,11 @@
   margin-top: 50px;
 }
 
+.list-unstyled {
+  font-size: 15pt;
+  text-align: center;
+}
+
 .btn-primary {
   background-color: #1ab188;
 }
