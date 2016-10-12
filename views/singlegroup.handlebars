@@ -18,26 +18,30 @@
         </ul>
     </div>
 
+    <!-- jQuery Comments -->
     <div class="col-lg-5">
-        <h2 class="text-center">DISQUS</h2>
-        <!-- DISQUS WIDGET -->
-
-
-        <!-- Your buddy info! -->
-        <p>Didn't know where else to put this oscar you can just copy/paste!<p>
-
-        <h2>This is your Gift Buddy(Tm)!</h2>
-        {{#each yourBuddy}}
-            <p>
-                {{this.full_name}}  <br>
-                {{this.address}}    <br>
-                {{this.email}}      <br>
-                {{this.wishes}}     <br>
-            </p>
-        {{/each}}
+        <div id="comments-container" class="jquery-comments" style="margin-top: 50px; padding-left: 30px; padding-right: 30px;">
+            <h2 class="text-center">jQuery Comments</h2>
+        </div>
 
     </div>
     <div class="col-lg-4">
+        <div class="row">
+
+            <div class="col-md-12 text-center">
+                <!-- Your buddy info! -->
+                <h2>Your Gift Buddy!</h2>
+                {{#each yourBuddy}}
+                    <p>
+                        {{this.full_name}}  <br>
+                        {{this.address}}    <br>
+                        {{this.email}}      <br>
+                        {{this.wishes}}     <br>
+                    </p>
+                {{/each}}
+            </div>
+
+        </div>
         <h2 class="text-center">GIFTS</h2>
         <div class="row">
             <div class="col-md-6">
@@ -72,6 +76,27 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="/static/assets/js/jquery-comments.js"></script>
+
+<script type="text/javascript">
+
+$('#comments-container').comments({
+    profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
+    getComments: function(success, error) {
+        var commentsArray = [{
+            id: 1,
+            created: '2016-12-12',
+            content: 'Honestly, its a NO for me...',
+            fullname: 'Simon Cowell',
+            upvote_count: 2,
+            user_has_upvoted: false
+        }];
+        success(commentsArray);
+    }
+});
+
+</script>
 
 <footer class="container-fluid text-center" style="bottom: 0;">
   <form class="form-inline" style="font-size: 15pt;">Copyright GiftBuddy</form>
