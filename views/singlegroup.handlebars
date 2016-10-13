@@ -3,9 +3,31 @@
 <div class="jumbotron">
   <div class="container text-center">
     <h1>{{groupName}}</h1>
-    <p>Testing</p>
+    <p>Single Group</p>
   </div>
 </div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home/">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/addGroup">Add Group</a></li>
+        <li><a href="/sendGift">Send Gift</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
   <div class="row">
@@ -41,37 +63,6 @@
                 {{/each}}
             </div>
 
-        </div>
-        <h2 class="text-center">GIFTS</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th><strong>Sent</strong></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Item_Sent</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th><strong>Recieved</strong></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Item_Recieved</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
   </div>
