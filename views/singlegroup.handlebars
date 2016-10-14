@@ -20,14 +20,58 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/addGroup">Add Group</a></li>
-        <li><a href="/sendGift">Send Gift</a></li>
+        <li><a data-toggle="modal" data-target="#myModal">Send Gift</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+        <li><a href="/yourAccount"><i class="fa fa-user" aria-hidden="true"></i> Your Account</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Send Gift</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text" class="form-control input-sm" id="name" placeholder="John Smith">
+                </div>
+            </div>
+            <div class="form-group"> 
+                <div class="col-sm-12">    
+                    <input type="address" class="form-control input-sm" id="address" placeholder="100 Weldon Blvd, Sanford, FL 32773">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">    
+                    <input type="email" class="form-control input-sm" id="email" placeholder="Example@gmail.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <textarea class="form-control input-sm" id="message" rows="5" placeholder="Enter a massage..."></textarea>
+                </div>
+            </div>
+          </form>  
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default">Send</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 <div class="container">
   <div class="row">
