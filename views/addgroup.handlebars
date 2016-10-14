@@ -58,6 +58,7 @@
           <input id="addGroupName" type="text" name="group_name" required autocomplete="off" placeholder="Name of Group" />
 
           <input id="addGroupAmount" type="text" name="dollar_amount" required autocomplete="off" placeholder="Amount" />
+            <input class="sr-only" id="members" type="text" name="members"/>
 
           <button id="addGroupButton" class="button button-block" type="submit">Add Group</button>
         </div>
@@ -71,6 +72,14 @@
   $('#allUsers li').click(function()
     {
         $('#selectedUsers').append($(this));
+        var members = [];
+        if($('#members').val() === "")
+            $('#members').val(JSON.stringify([]));
+        else
+            members = JSON.parse($('#members').val());
+
+        members.push($(this).data('uid'));
+        $('#members').val(JSON.stringify(members));
     });
 </script>
 

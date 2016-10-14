@@ -13,9 +13,25 @@ function objToSql(ob){
   return arr.toString();
 }
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
- 
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 /* OBJECT RELATIONAL MODEL */
 var orm = {
     createUser: function(tableInput, full_name, email, password, cb) {
@@ -43,13 +59,28 @@ var orm = {
     },
 
 
-    addUsersToGroup: function(tableInput, members, cb){
+    addUsersToGroup: function(tableInput, members, group_id, cb){
 
-        var queryString = 'INSERT INTO ' + tableInput + ' (users_id, groups_id, admin) ';
-        queryString += 'VALUES ';
+        var queryString = 'INSERT INTO ' + tableInput + ' (users_id, groups_id, admin, assigned_user_id)';
+        queryString += ' VALUES ';
+        var senders = shuffle(members);
+        var receivers = senders.slice();
+        var pairs = [];
 
-        for (var i=0; i<members.length; i++){
-            queryString += '(' + members[i].users_id + ', ' + members[i].groups_id + ',' + members[i].admin + ')';
+        receivers.unshift(receivers.pop());
+        for(var j = 0; j < senders.length; j++)
+        {
+            pairs.push({ "sender": senders[j], "receiver": receivers[j]});
+        }
+        for (var i=0; i<pairs.length; i++){
+            queryString += '(' + pairs[i].sender + ', ' + group_id;
+            if(i == 0)
+                queryString += ', 1, ';
+            else
+                queryString += ', 0, ';
+            queryString += pairs[i].receiver + ')';
+            if(i != (members.length - 1))
+                queryString += ',';
         }
 
         console.log(queryString);

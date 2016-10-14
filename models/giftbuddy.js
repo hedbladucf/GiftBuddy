@@ -16,8 +16,8 @@ var giftObject = {
     	});
     },
 
-    addUsersToGroup: function(tableInput, members, cb){
-        orm.addUserToGroup(tableInput, members, function(result){
+    addUsersToGroup: function(tableInput, members, group_id, cb){
+        orm.addUsersToGroup(tableInput, members, group_id, function(result){
             cb(result);
         });
     },

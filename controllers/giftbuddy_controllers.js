@@ -124,19 +124,20 @@ module.exports = function(app){
 
 		var group_name = req.body.group_name;
 		var dollar_amount = req.body.dollar_amount;
+		var members = JSON.parse(req.body.members);
 		console.log(req.body);
 		//Create the group with name and dollar amount
 		GB.createGroup('groups', group_name, dollar_amount, function(data){
-			
+
 			//Then grab the id of the newly created group
 			GB.findGroup('groups', group_name, function(data){
 
 				// console.log(data[0].g_id);
 
 				var groups_id = data[0].g_id;
-
 				// //Then add the users_groups entry
-				GB.addUsersToGroup('users_groups', members, function(data){
+				members.unshift(userID);
+				GB.addUsersToGroup('users_groups', members, groups_id, function(data){
 					console.log(members);
 
 					res.redirect('/group/' + groups_id);
