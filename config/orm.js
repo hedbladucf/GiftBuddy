@@ -149,7 +149,7 @@ var orm = {
     },
 
 
-    update: function(tableInput, objColVals, userID, cb){
+    updateAccount: function(tableInput, objColVals, userID, cb){
         var queryString = 'UPDATE ' + tableInput;
 
         queryString += ' SET ';
@@ -231,6 +231,16 @@ var orm = {
             cb(result);
         }); 
 
+    },
+
+    sendGift: function(groupsID, buddyID, userID, itemNote, cb){
+        var queryString = 'UPDATE users_groups SET item_note = (?) WHERE users_id = (?) and assigned_user_id = (?) and groups_id = (?)';
+        console.log(queryString);
+
+        connection.query(queryString, [itemNote, userID, buddyID, groupsID], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        }); 
     }
 
 

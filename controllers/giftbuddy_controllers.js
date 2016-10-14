@@ -160,8 +160,6 @@ module.exports = function(app){
 
 		var item_note = req.body.item_note;
 
-		console.log(group_name + " " + buddy_name);
-
 		//Then grab the id of the newly created group
 		GB.findGroup('groups', group_name, function(data){
 
@@ -170,8 +168,8 @@ module.exports = function(app){
 			var groups_id = data[0].g_id;
 
 
-			GB.sendGift('users_groups', groups_id, buddy_id, userID, item_note, function()){
-
+			GB.sendGift(groups_id, buddy_id, userID, item_note, function(data){
+				res.redirect('/group/' + groups_id);
 			});
 
 

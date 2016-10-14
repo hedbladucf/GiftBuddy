@@ -54,7 +54,7 @@ var giftObject = {
     },
 
     updateAccount: function(tableInput, objColVals, userID, cb){
-        orm.update(tableInput, objColVals, userID, function(res){
+        orm.updateAccount(tableInput, objColVals, userID, function(res){
             cb(res);
         });
     },
@@ -90,6 +90,12 @@ var giftObject = {
 
     yourBuddyInfo: function(userID, groupID, cb){
         orm.yourBuddyInfo(userID, groupID, function(res){
+            cb(res);
+        });
+    },
+
+    sendGift: function(groupsID, buddyID, userID, itemNote, cb){
+        orm.sendGift(groupsID, buddyID, userID, itemNote, function(res){
             cb(res);
         });
     }
