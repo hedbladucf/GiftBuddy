@@ -45,17 +45,18 @@
           {{#each yourBuddy}}
             <div class="form-group">
                 <div class="col-sm-12">
-                    <input type="text" name="buddy_name" class="form-control input-sm" value="{{this.full_name}}">
+                    <input type="text" name="buddy_name" class="form-control input-sm" value="{{this.full_name}}" readonly>
+                    <input type="text" name="buddy_id" class="form-control sr-only" value="{{this.u_id}}">
                 </div>
             </div>
             <div class="form-group"> 
                 <div class="col-sm-12">    
-                    <input type="address" name="address" class="form-control input-sm" value="{{this.address}}">
+                    <input type="address" name="address" class="form-control input-sm" value="{{this.address}}" readonly>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">    
-                    <input type="email" name="email" class="form-control input-sm" value="{{this.email}}">
+                    <input type="email" name="email" class="form-control input-sm" value="{{this.email}}" readonly>
                 </div>
             </div>
 
