@@ -40,27 +40,28 @@
           <h4 class="modal-title text-center">Send Gift</h4>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal">
+          <form class="form-horizontal" action="/sendGift" method="post">
+          <input type="text" name="group_name" class="sr-only" value="{{groupName}}">
           {{#each yourBuddy}}
             <div class="form-group">
                 <div class="col-sm-12">
-                    <input type="text" class="form-control input-sm" id="name" value="{{this.full_name}}">
+                    <input type="text" name="full_name" class="form-control input-sm" value="{{this.full_name}}">
                 </div>
             </div>
             <div class="form-group"> 
                 <div class="col-sm-12">    
-                    <input type="address" class="form-control input-sm" id="address" value="{{this.address}}">
+                    <input type="address" name="address" class="form-control input-sm" value="{{this.address}}">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">    
-                    <input type="email" class="form-control input-sm" id="email" value="{{this.email}}">
+                    <input type="email" name="email" class="form-control input-sm" value="{{this.email}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-12">
-                    <textarea class="form-control input-sm" id="message" rows="5" placeholder="Enter a massage..."></textarea>
+                    <textarea class="form-control input-sm" rows="5" placeholder="Enter a massage..."></textarea>
                 </div>
             </div>
            {{/each}}
