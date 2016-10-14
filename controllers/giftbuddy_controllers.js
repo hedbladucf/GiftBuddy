@@ -152,27 +152,30 @@ module.exports = function(app){
 		//Grab their id from the cookie
 		var cookie = req.headers.cookie;
 		var cookieArray = cookie.split("--");
+
+
 		var userID = cookieArray[0];
-
-
 		var group_name = req.body.group_name;
-		var buddy_name = req.body.buddy_name;
+		var buddy_id = req.body.buddy_id;
+
 		var item_note = req.body.item_note;
 
 		console.log(group_name + " " + buddy_name);
 
-		// //Then grab the id of the newly created group
-		// GB.findGroup('groups', group_name, function(data){
+		//Then grab the id of the newly created group
+		GB.findGroup('groups', group_name, function(data){
 
-		// 	// console.log(data[0].g_id);
+			// console.log(data[0].g_id);
 
-		// 	var groups_id = data[0].g_id;
-
-
-		// 	GB.sendGift('users_groups', groups_id, userID,)
+			var groups_id = data[0].g_id;
 
 
-		// });
+			GB.sendGift('users_groups', groups_id, buddy_id, userID, item_note, function()){
+
+			});
+
+
+		});
 
 
 
