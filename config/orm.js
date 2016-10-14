@@ -223,7 +223,7 @@ var orm = {
     },
 
     yourBuddyInfo: function(userID, groupID, cb){
-        var queryString = 'select users.u_id, users.full_name, users.address, users.email, users.wishes FROM users JOIN users_groups ON users_groups.assigned_user_id = users.u_id where users_groups.users_id = (?) AND users_groups.groups_id = (?)';
+        var queryString = 'select users.u_id, users_groups.item_note, users.full_name, users.address, users.email, users.wishes FROM users JOIN users_groups ON users_groups.assigned_user_id = users.u_id where users_groups.users_id = (?) AND users_groups.groups_id = (?)';
         console.log(queryString);
 
         connection.query(queryString, [userID, groupID], function(err, result) {
