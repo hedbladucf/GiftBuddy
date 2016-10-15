@@ -152,9 +152,8 @@ module.exports = function(app){
 		//Grab their id from the cookie
 		var cookie = req.headers.cookie;
 		var cookieArray = cookie.split("--");
-
-
-		var userID = cookieArray[0];
+		// var userID = cookieArray[0];
+		
 		var group_name = req.body.group_name;
 		var buddy_id = req.body.buddy_id;
 
