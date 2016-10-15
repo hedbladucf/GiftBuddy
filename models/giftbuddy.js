@@ -95,7 +95,7 @@ var giftObject = {
     },
 
     sendGift: function(groupsID, buddyID, itemNote, cb){
-        orm.sendGift(groupsID, buddyID, userID, itemNote, function(res){
+        orm.sendGift(groupsID, buddyID, itemNote, function(res){
             cb(res);
         });
     }
