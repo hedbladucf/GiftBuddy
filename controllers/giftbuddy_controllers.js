@@ -168,7 +168,7 @@ module.exports = function(app){
 			var groups_id = data[0].g_id;
 
 
-			GB.sendGift(groups_id, buddy_id, userID, item_note, function(data){
+			GB.sendGift(groups_id, buddy_id, item_note, function(data){
 				res.redirect('/group/' + groups_id);
 			});
 
